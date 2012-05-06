@@ -12,17 +12,47 @@ import javax.swing.JPanel;
 
 public class RenderWindow extends Canvas
 {
+	// #######################################################################
+	// Variables
+	// #######################################################################
+	// not used by the class, but needed because of extending the class Canvas
 	private static final long serialVersionUID = 1L;
-	
+	// holds our current screen we have to render to our window
 	private Gamescreen Current_Screen;
+	// used to manage accelerated graphics
 	private BufferStrategy Buffer_Strategy;
 	
+	// our window width (obviously)
 	private int window_width;
+	// our window height (obviously)
 	private int window_height;
 	
 	
+	
+	// #######################################################################
+	// public
+	// #######################################################################
+	
+	// =======================================================================
+	// RenderWindow
+	// desc: 	initialises our render window with provided parameters and 
+	//			applies some common settings, we dont need to change
+	// param: 	String title: title for our rendering window
+	// 			int width: window width
+	//			int height: window height
+	// =======================================================================
 	public RenderWindow(String title, int width, int height)
 	{
+		DebugConsole.Print("Init RenderWindow...");
+		
+		// error checks
+		if (width <= 0 || height <= 0)
+			DebugConsole.PrintError("Screen width or height <= 0");
+		
+		if (title == null)
+			DebugConsole.PrintError("Invalid Windowtitle");
+		
+		
 		// apply to private variables
 		this.window_height = height;
 		this.window_width = width;
@@ -64,13 +94,35 @@ public class RenderWindow extends Canvas
                 System.exit(0);
             }
         });
+		
+		DebugConsole.Print("Init RenderWindow DONE");
 	}
 
+	
+	// =======================================================================
+	// setCurrentScreen
+	// desc: 	set the current game screen, which has get rendered
+	// param: 	Gamescreen New_Screen: the screen, which has get rendered
+	// ret:		void
+	// =======================================================================
 	public void setCurrentScreen(Gamescreen New_Screen)	 
 	{
+		DebugConsole.Print("Setting new Gamescreen");
+		
+		// error check
+		if (New_Screen == null)
+			DebugConsole.PrintError("Invalid new Gamescreen");
+		
 		this.Current_Screen = New_Screen;
 	}
 	
+	
+	// =======================================================================
+	// updateRenderWindow
+	// desc: 	updates our render window with our previously set game screen
+	// param: 	void
+	// ret:		void
+	// =======================================================================
 	public void updateRenderWindow()
 	{
 		// Get hold of a graphics context for the accelerated 
@@ -91,4 +143,10 @@ public class RenderWindow extends Canvas
 	}
 	
 	
+	
+	// #######################################################################
+	// public
+	// #######################################################################
+	
+	// nothing here	
 }

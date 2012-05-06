@@ -1,20 +1,7 @@
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
-/**
- * An entity represents any element that appears in the game. The
- * entity is responsible for resolving collisions and movement
- * based on a set of properties defined either by subclass or externally.
- * 
- * Note that doubles are used for positions. This may seem strange
- * given that pixels locations are integers. However, using double means
- * that an entity can move a partial pixel. It doesn't of course mean that
- * they will be display half way through a pixel but allows us not lose
- * accuracy as we move.
- * 
- * @author Kevin Glass
- */
-public class Entity 
+public abstract class Entity 
 {
 	/** The current x location of this entity */ 
 	protected double x;
@@ -51,10 +38,15 @@ public class Entity
 	 * 
 	 * @param delta The ammount of time that has passed in milliseconds
 	 */
-	public void move(long delta) 
+	public void moveX(long delta) 
 	{
 		// update the location of the entity based on move speeds
 		x += (delta * dx) / 1000;
+	}
+	
+	public void moveY(long delta) 
+	{
+		// update the location of the entity based on move speeds
 		y += (delta * dy) / 1000;
 	}
 	
@@ -112,8 +104,8 @@ public class Entity
 	 * Do the logic associated with this entity. This method
 	 * will be called periodically based on game events
 	 */
-//	public void doLogic() {
-//	}
+	public void doLogic() {
+	}
 	
 	/**
 	 * Get the x location of this entity
@@ -154,5 +146,5 @@ public class Entity
 	 * 
 	 * @param other The entity with which this entity collided.
 	 */
-	//public abstract void collidedWith(Entity other);
+	public abstract void collidedWith(Entity other);
 }
