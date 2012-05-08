@@ -1,30 +1,49 @@
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
+
+//=======================================================================
+// Entity
+// desc: 	an entity resembles an object in the game. it has its own 
+//			sprite/picture, its own radius for collision and few other
+//			attributes. its an abstract class, so for a special entity
+//			in your game, you have to create a separate class which
+//			extends all the attributes of this one and add a the 
+//			characteristic ones
+//=======================================================================
 public abstract class Entity 
 {
-	/** The current x location of this entity */ 
+	// #######################################################################
+	// Variables
+	// #######################################################################
+	// the current x location of this entity 
 	protected double x;
-	/** The current y location of this entity */
+	// the current y location of this entity
 	protected double y;
-	/** The sprite that represents this entity */
+	// the sprite that represents this entity
 	protected Sprite sprite;
-	/** The current speed of this entity horizontally (pixels/sec) */
+	// the current speed of this entity horizontally (pixels/sec)
 	protected double dx;
-	/** The current speed of this entity vertically (pixels/sec) */
+	// the current speed of this entity vertically (pixels/sec)
 	protected double dy;
-	/** The rectangle used for this entity during collisions  resolution */
+	// the rectangle used for this entity during collisions resolution
 	private Rectangle me = new Rectangle();
-	/** The rectangle used for other entities during collision resolution */
+	// the rectangle used for other entities during collision resolution
 	private Rectangle him = new Rectangle();
 	
-	/**
-	 * Construct a entity based on a sprite image and a location.
-	 * 
-	 * @param ref The reference to the image to be displayed for this entity
- 	 * @param x The initial x location of this entity
-	 * @param y The initial y location of this entity
-	 */
+	
+	
+	// #######################################################################
+	// Public functions
+	// #######################################################################
+	
+	// =======================================================================
+	// Entity
+	// desc: 	construct a entity based on a sprite image and a location.
+	// param: 	String sprite_name: name of the sprite loaded into our storage
+	//			int x: initial x cord of the entity
+	//			int y: initial y cord of the entity
+	// =======================================================================
 	public Entity(String sprite_name, int x, int y) 
 	{
 		this.sprite = SpriteStorage.get().getSprite(sprite_name);
@@ -32,12 +51,13 @@ public abstract class Entity
 		this.y = y;
 	}
 	
-	/**
-	 * Request that this entity move itself based on a certain ammount
-	 * of time passing.
-	 * 
-	 * @param delta The ammount of time that has passed in milliseconds
-	 */
+	
+	// =======================================================================
+	// moveX
+	// desc: 	move the entity based on a certain amount of time passing
+	// param: 	long delta: amount of time passed in milliseconds
+	// ret:		void
+	// =======================================================================
 	public void moveX(long delta) 
 	{
 		// update the location of the entity based on move speeds
@@ -50,89 +70,110 @@ public abstract class Entity
 		y += (delta * dy) / 1000;
 	}
 	
-	/**
-	 * Set the horizontal speed of this entity
-	 * 
-	 * @param dx The horizontal speed of this entity (pixels/sec)
-	 */
+	
+	// =======================================================================
+	// setHorizontalSpeedMovement
+	// desc: 	obvious
+	// param: 	double dx: horizontal speed in (pixels/sec)
+	// ret:		void
+	// =======================================================================
 	public void setHorizontalSpeedMovement(double dx) 
 	{
 		this.dx = dx;
 	}
 
-	/**
-	 * Set the vertical speed of this entity
-	 * 
-	 * @param dx The vertical speed of this entity (pixels/sec)
-	 */
+	
+	// =======================================================================
+	// setVerticalSpeedMovement
+	// desc: 	obvious
+	// param: 	double dx: vertical speed in (pixels/sec)
+	// ret:		void
+	// =======================================================================
 	public void setVerticalSpeedMovement(double dy) 
 	{
 		this.dy = dy;
 	}
 	
-	/**
-	 * Get the horizontal speed of this entity
-	 * 
-	 * @return The horizontal speed of this entity (pixels/sec)
-	 */
+	
+	// =======================================================================
+	// getHorizontalSpeedMovement
+	// desc: 	obvious
+	// param: 	void
+	// ret:		return horizontal speed in (pixels/sec)
+	// =======================================================================
 	public double getHorizontalSpeedMovement() 
 	{
 		return dx;
 	}
 
-	/**
-	 * Get the vertical speed of this entity
-	 * 
-	 * @return The vertical speed of this entity (pixels/sec)
-	 */
+	
+	// =======================================================================
+	// getVerticalSpeedMovement
+	// desc: 	obvious
+	// param: 	void
+	// ret:		return vertical speed in (pixels/sec)
+	// =======================================================================
 	public double getVerticalSpeedMovement() 
 	{
 		return dy;
 	}
 	
-	/**
-	 * Draw this entity to the graphics context provided
-	 * 
-	 * @param g The graphics context on which to draw
-	 */
+	
+	// =======================================================================
+	// draw
+	// desc: 	draw entity to provided graphics context
+	// param: 	Graphics graphics_context: the context to draw the entity to
+	// ret:		void
+	// =======================================================================
 	public void draw(Graphics graphics_context) 
 	{
 		sprite.draw(graphics_context, (int) x, (int) y);
 	}
 	
-	/**
-	 * Do the logic associated with this entity. This method
-	 * will be called periodically based on game events
-	 */
-	public void doLogic() {
+	
+	// =======================================================================
+	// doLogic
+	// desc: 	do the logic associated with this entity. this method
+	//			will be called periodically based on game events
+	// param: 	void
+	// ret:		void
+	// =======================================================================
+	public void doLogic() 
+	{
+		// nothing here
 	}
 	
-	/**
-	 * Get the x location of this entity
-	 * 
-	 * @return The x location of this entity
-	 */
+	
+	// =======================================================================
+	// getLocationX
+	// desc: 	obvious
+	// param: 	void
+	// ret:		return current x location
+	// =======================================================================
 	public int getLocationX() 
 	{
 		return (int) x;
 	}
 
-	/**
-	 * Get the y location of this entity
-	 * 
-	 * @return The y location of this entity
-	 */
+	
+	// =======================================================================
+	// getLocationY
+	// desc: 	obvious
+	// param: 	void
+	// ret:		return current y location
+	// =======================================================================
 	public int getLocationY() 
 	{
 		return (int) y;
 	}
 	
-	/**
-	 * Check if this entity collised with another.
-	 * 
-	 * @param other The other entity to check collision against
-	 * @return True if the entities collide with each other
-	 */
+	
+	// =======================================================================
+	// collidesWith
+	// desc: 	check if this entity colides with another
+	// param: 	Entity other: the other entity to check the collision against
+	// ret:		true if we collide with provided entity, false if not
+	// =======================================================================
 	public boolean collidesWith(Entity other) 
 	{
 		me.setBounds((int) x,(int) y,sprite.getWidth(),sprite.getHeight());
@@ -141,10 +182,20 @@ public abstract class Entity
 		return me.intersects(him);
 	}
 	
-	/**
-	 * Notification that this entity collided with another.
-	 * 
-	 * @param other The entity with which this entity collided.
-	 */
+	
+	// =======================================================================
+	// collidedWith
+	// desc: 	notification that this entity collided with another.
+	// param: 	Entity other: the other entity with which this one collided
+	// ret:		true if we collide with provided entity, false if not
+	// =======================================================================
 	public abstract void collidedWith(Entity other);
+	
+	
+	
+	// #######################################################################
+	// Private functions
+	// #######################################################################
+	
+	// nothing here
 }

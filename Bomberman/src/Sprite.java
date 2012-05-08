@@ -1,51 +1,79 @@
 import java.awt.Graphics;
 import java.awt.Image;
 
-
+//=======================================================================
+// Sprite
+// desc: 	class wrapping around the standard image class with some
+//			additional stuff, to make handling for images easier
+//=======================================================================
 public class Sprite 
 {
-	/** The image to be drawn for this sprite */
+	// #######################################################################
+	// Variables
+	// #######################################################################
+	// the image for our sprite
 	private Image image;
 	
-	/**
-	 * Create a new sprite based on an image
-	 * 
-	 * @param image The image that is this sprite
-	 */
+	
+	
+	// #######################################################################
+	// Public functions
+	// #######################################################################
+
+	// =======================================================================
+	// Sprite
+	// desc: 	create a new sprite based on a provided image
+	// param: 	Image image: image for the sprite
+	// =======================================================================
 	public Sprite(Image image) 
 	{
 		this.image = image;
 	}
 	
-	/**
-	 * Get the width of the drawn sprite
-	 * 
-	 * @return The width in pixels of this sprite
-	 */
+	
+	// =======================================================================
+	// getWidth
+	// desc: 	get width of the sprite
+	// param: 	void
+	// ret:		width of the sprite
+	// =======================================================================
 	public int getWidth() 
 	{
 		return image.getWidth(null);
 	}
 
-	/**
-	 * Get the height of the drawn sprite
-	 * 
-	 * @return The height in pixels of this sprite
-	 */
+	
+	// =======================================================================
+	// getHeight
+	// desc: 	get height of the sprite
+	// param: 	void
+	// ret:		height of the sprite
+	// =======================================================================
 	public int getHeight() 
 	{
 		return image.getHeight(null);
 	}
 	
-	/**
-	 * Draw the sprite onto the graphics context provided
-	 * 
-	 * @param g The graphics context on which to draw the sprite
-	 * @param x The x location at which to draw the sprite
-	 * @param y The y location at which to draw the sprite
-	 */
-	public void draw(Graphics g,int x,int y) 
+	
+	// =======================================================================
+	// draw
+	// desc: 	draw the sprite onto the provided graphics context at a
+	//			specified position
+	// param: 	Graphics g: the context to draw the sprite to
+	//			int x: x location to draw the sprite to
+	//			int y: y location to draw the sprite to
+	// ret:		void
+	// =======================================================================
+	public void draw(Graphics g, int x, int y) 
 	{
-		g.drawImage(image,x,y,null);
+		g.drawImage(image, x, y, null);
 	}
+	
+	
+	
+	// #######################################################################
+	// Private functions
+	// #######################################################################
+	
+	// nothing here
 }

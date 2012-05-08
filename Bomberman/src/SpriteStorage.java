@@ -9,31 +9,51 @@ import java.util.HashMap;
 
 import javax.imageio.ImageIO;
 
-
+//=======================================================================
+// SpriteStorage
+// desc: 	this class provides a storage for all the sprites/images
+// 			used in the whole game. we have to fill it on startup
+//			and then we can access the sprites very easy by just using
+//			the key/name we gave them when adding them to the storage
+//			by that, we dont have to care about loading sprites anymore
+//			during the mainloop
+//=======================================================================
 public class SpriteStorage 
 {
+	// #######################################################################
+	// Variables
+	// #######################################################################
 	// we only need a single instance of this class
 	private static SpriteStorage single = new SpriteStorage();
-	
 	// cached sprite map, from reference to sprite instance
 	// used to avoid loading sprites more than one time
 	private HashMap<String, Sprite> sprites = new HashMap<String, Sprite>();
 	
 	
 	
+	// #######################################################################
+	// Public functions
+	// #######################################################################
+
+	// =======================================================================
+	// get
+	// desc: 	returns our single instance of the sprite storage
+	// param: 	void
+	// ret:		our single instance
+	// =======================================================================
 	public static SpriteStorage get() 
 	{
 		return single;
 	}
 	
 	
-	
-	/**
-	 * Retrieve a sprite from the store
-	 * 
-	 * @param ref The reference to the image to use for the sprite
-	 * @return A sprite instance containing an accelerate image of the request reference
-	 */
+	// =======================================================================
+	// get
+	// desc: 	get a sprite from the storage
+	// param: 	String sprite_name: name of the sprite, which got its image in
+	//			the folder "Images"
+	// ret:		if the sprite was found, it is returned, else null
+	// =======================================================================
 	public Sprite getSprite(String sprite_name) 
 	{
 		// if we've already got the sprite in the cache
@@ -54,8 +74,8 @@ public class SpriteStorage
 		} 
 		catch (IOException e) 
 		{
-			// TODO: debug output here
-			System.out.println("Failed to load: "+ sprite_name);
+			DebugConsole.PrintError("Failed to get sprite " + sprite_name + "from sprite storage, no such sprite exists");
+			return null;
 		}
 		
 		// create an accelerated image of the right size to store our sprite in
@@ -71,5 +91,13 @@ public class SpriteStorage
 		
 		return sprite;
 	}
+	
+	
+	
+	// #######################################################################
+	// Private functions
+	// #######################################################################
+	
+	// nothing here
 
 }

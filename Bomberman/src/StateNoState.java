@@ -1,4 +1,9 @@
 
+//=======================================================================
+// StateNoState
+// desc: 	just a dummy used for initializing the engine and if
+//			we are running into some unknown states
+//=======================================================================
 public class StateNoState implements InterfaceState
 {
 	public StateNoState()
@@ -9,18 +14,18 @@ public class StateNoState implements InterfaceState
 	@Override
 	public void init() 
 	{
-		// nothing here
+		DebugConsole.Print("Initializing NOSTATE");
 	}
 
 	@Override
-	public void main() 
+	public void main(long elapsed_time) 
 	{
-		// nothing here
+		DebugConsole.Print("Running NOSTATE");
 	}
 
 	@Override
 	public void shutdown() 
 	{
-		// nothing here
+		DebugConsole.Print("Shutting down NOSTATE");
 	}
 }

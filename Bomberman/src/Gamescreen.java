@@ -2,6 +2,13 @@ import java.awt.Graphics;
 import java.util.HashMap;
 
 
+//=======================================================================
+// Gamescreen
+// desc: 	keeps track of all entities on one screen. simply add all your
+// 			entities, you want to have to appear on your screen to this.
+//			everything gets updated within the mainloop automatically,
+//			so you dont have to keep track of that.
+//=======================================================================
 public class Gamescreen 
 {
 	// #######################################################################

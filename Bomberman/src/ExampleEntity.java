@@ -1,4 +1,5 @@
 
+// just for debug and showcase, delete that later
 public class ExampleEntity extends Entity
 {
 	public ExampleEntity(String sprite_name, int x, int y)
@@ -11,5 +12,4 @@ public class ExampleEntity extends Entity
 		// TODO Auto-generated method stub
 		
 	}
-
 }

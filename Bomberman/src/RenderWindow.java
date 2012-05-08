@@ -95,6 +95,10 @@ public class RenderWindow extends Canvas
             }
         });
 		
+		// attach our input class to the window, so we get our actions states
+		this.addKeyListener(new KeyboardInput());	// keyboard
+													// future: joystick?
+		
 		DebugConsole.Print("Init RenderWindow DONE");
 	}
 

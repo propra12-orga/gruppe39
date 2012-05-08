@@ -1,4 +1,11 @@
 
+//=======================================================================
+// Gamestate
+// desc: 	simple class keeping track of our gamestate (either current
+//			or previous) with practical enum
+//			wont add any further description, because everything 
+//			explains itself
+//=======================================================================
 public class Gamestate 
 {
 	public static enum STATE 

@@ -1,25 +1,45 @@
-// MAIN TODO:
+// MAIN TODO for engine:
 // - sprite animations with seperate threads
-// - doc
-// - 
 
 
+// =======================================================================
+// Bomberman
+// desc: our main class/engine and program entry point
+// =======================================================================
 public class Bomberman
 {
+	// #######################################################################
+	// Variables
+	// #######################################################################
+	// variable indicating, we want to stay in our mainloop
 	private boolean game_running;
+	// holding timestamp of previous gameloop to calculate update time delta
 	private long last_gameloop_time;
 	
+	// our main rendering window
 	private RenderWindow Render_Window;
+	// current screen getting displayed
 	private Gamescreen Cur_Gamescreen;
 
-	
+	// our current gamestate for the main gameloop
 	private Gamestate Cur_Gamestate;
+	// and previous one
 	private Gamestate Prev_Gamestate;
 	
+	// reference to our current screen getting executed
 	private InterfaceState Screen_State;
 	
 	
+	
+	// #######################################################################
+	// Public functions
+	// #######################################################################
 
+	// =======================================================================
+	// main
+	// desc: program entry point
+	// param: void
+	// =======================================================================
 	public static void main(String[] args)
 	{
 		// DEBUG: set your level of verbose here, to see debug output
@@ -36,12 +56,42 @@ public class Bomberman
 		game.gameLoop();
 		game.shutdown();
 	}
-	
-	public Bomberman()
+
+
+	// =======================================================================
+	// init
+	// desc: 	initializing important parts of the engine
+	// param: 	void
+	// ret: 	void
+	// =======================================================================
+	public void init()
 	{
-		// nothing here
+		DebugConsole.Print("Initializing...");
+		
+		// create our main rendering window
+		this.Render_Window = new RenderWindow("Bomberman", 640, 480);
+		
+		// set initial gamestates
+		// TODO: for later, set this to the first screen which has to appear
+		this.Cur_Gamestate = new Gamestate(Gamestate.STATE.GAME_MODE);
+		this.Prev_Gamestate = new Gamestate(Gamestate.STATE.NO_STATE);
+		
+		// init screen state
+		this.Screen_State = new StateNoState();
+		
+		// set game running
+		this.game_running = true;
+		
+		DebugConsole.Print("Initializing DONE");
 	}
 	
+	
+	// =======================================================================
+	// gameLoop
+	// desc: 	looping through all the important parts for the game to run
+	// param: 	void
+	// ret: 	void
+	// =======================================================================
 	public void gameLoop()
 	{		
 		DebugConsole.Print("Starting Gameloop");
@@ -112,7 +162,7 @@ public class Bomberman
 			}			
 
 			// execute main of our current state
-			this.Screen_State.main();
+			this.Screen_State.main(delta);
 			
 			// update graphics
 			this.Render_Window.updateRenderWindow();
@@ -124,32 +174,25 @@ public class Bomberman
 		}
 	}
 	
-	public void init()
-	{
-		DebugConsole.Print("Initializing...");
-		
-		// create our main rendering window
-		this.Render_Window = new RenderWindow("Bomberman", 640, 480);
-		
-		// set initial gamestates
-		// TODO: for later, set this to the first screen which has to appear
-		this.Cur_Gamestate = new Gamestate(Gamestate.STATE.GAME_MODE);
-		this.Prev_Gamestate = new Gamestate(Gamestate.STATE.NO_STATE);
-		
-		// init screen state
-		this.Screen_State = new StateNoState();
-		
-		// set game running
-		this.game_running = true;
-		
-		DebugConsole.Print("Initializing DONE");
-	}
 	
-	
+	// =======================================================================
+	// shutdown
+	// desc: 	cleaning up stuff, if there is any
+	// param: 	void
+	// ret: 	void
+	// =======================================================================	
 	public void shutdown()
 	{
 		DebugConsole.Print("Shutting down...");
 		
 		DebugConsole.Print("Shutting down DONE");
 	}
+	
+	
+	
+	// #######################################################################
+	// Private functions
+	// #######################################################################
+	
+	// nothing here
 }

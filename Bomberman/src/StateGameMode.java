@@ -1,4 +1,10 @@
 
+//=======================================================================
+// StateGameMode
+// desc: 	this state resembles our current running game, aka where 
+//			a player can actually blow stuff up
+//			for more information on details, see the corresponding interface
+//=======================================================================
 public class StateGameMode implements InterfaceState
 {
 	private Gamestate Cur_Gamestate;
@@ -14,6 +20,9 @@ public class StateGameMode implements InterfaceState
 	@Override
 	public void init() 
 	{
+		// init inputs for one player
+		KeyboardInput.init(1);
+		
 		// TODO Auto-generated method stub
 		this.Cur_Gamescreen.addEntityToScreen("E1", new ExampleEntity("Bomberman", 0, 0));
 		
@@ -22,9 +31,16 @@ public class StateGameMode implements InterfaceState
 	}
 
 	@Override
-	public void main() 
+	public void main(long elapsed_time) 
 	{
-		this.Cur_Gamescreen.getEntity("E1").moveX(100);
+		if (KeyboardInput.getActionState(0, KeyboardInput.ACTION.MOVE_UP) == true)
+			this.Cur_Gamescreen.getEntity("E1").moveY(50 * elapsed_time);
+		if (KeyboardInput.getActionState(0, KeyboardInput.ACTION.MOVE_DOWN) == true)
+			this.Cur_Gamescreen.getEntity("E1").moveY(-50 * elapsed_time);
+		if (KeyboardInput.getActionState(0, KeyboardInput.ACTION.MOVE_LEFT) == true)
+			this.Cur_Gamescreen.getEntity("E1").moveX(-50 * elapsed_time);
+		if (KeyboardInput.getActionState(0, KeyboardInput.ACTION.MOVE_RIGHT) == true)
+			this.Cur_Gamescreen.getEntity("E1").moveX(50 * elapsed_time);
 	}
 
 	@Override

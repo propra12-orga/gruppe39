@@ -1,13 +1,46 @@
 
+// =======================================================================
+// DebugConsole
+// desc: 	small class, providing simple calls to print some quick and
+//			formated information to the java console, for debugging
+//			purpose only, obviously
+// =======================================================================
 public class DebugConsole 
 {
-	static int verbose_level = 0;
+	// #######################################################################
+	// Variables
+	// #######################################################################
+	// our verbose level, defines how much we want to see on screen
+	private static int verbose_level = 0;
 	
+	
+	
+	// #######################################################################
+	// Public functions
+	// #######################################################################
+
+	// =======================================================================
+	// setVerboseLevel
+	// desc: 	set the verbose level for our session
+	// param: 	int level: 	0 = nothing
+	//						1 = print errors only with little additional information
+	//						2 = print errors and normal text with little additional information
+	//						3 = print errors only with much additional information
+	//						4 = print errors and normal text with much additional information
+	// ret:		void
+	// =======================================================================
 	public static void setVerboseLevel(int level)
 	{
 		DebugConsole.verbose_level = level;
 	}
 	
+	
+	// =======================================================================
+	// PrintError
+	// desc: 	prints an error formated massage to the screen
+	// param: 	String Text: our text we want ot get printed
+	// ret:		void
+	// =======================================================================
 	public static void PrintError(String Text)
 	{
 		if (verbose_level >= 1)
@@ -32,6 +65,13 @@ public class DebugConsole
 		}
 	}
 	
+	
+	// =======================================================================
+	// Print
+	// desc: 	prints a normal formated massage to the screen
+	// param: 	String Text: our text we want ot get printed
+	// ret:		void
+	// =======================================================================
 	public static void Print(String Text)
 	{
 		if (verbose_level >= 2)
@@ -55,4 +95,12 @@ public class DebugConsole
 			}
 		}
 	}
+	
+	
+	
+	// #######################################################################
+	// Private functions
+	// #######################################################################
+	
+	// nothing here
 }
