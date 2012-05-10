@@ -1,6 +1,7 @@
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Frame;
 import java.awt.Graphics2D;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -78,6 +79,7 @@ public class RenderWindow extends Canvas
 		container.pack();
 		container.setResizable(false);
 		container.setVisible(true);
+		container.toFront();	// FIXME: get focus of window doesnt work like that, why?
 		
 		// create the buffering strategy which will allow AWT
 		// to manage our accelerated graphics

@@ -69,7 +69,7 @@ public class Bomberman
 		DebugConsole.Print("Initializing...");
 		
 		// create our main rendering window
-		this.Render_Window = new RenderWindow("Bomberman", 640, 480);
+		this.Render_Window = new RenderWindow("Bomberman", 480, 480);
 		
 		// set initial gamestates
 		// TODO: for later, set this to the first screen which has to appear
