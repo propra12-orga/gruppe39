@@ -95,6 +95,12 @@ public class Gamescreen
 		}
 	}
 	
+	// TODO TODO
+	public void removeEntityFromScreen(String name)
+	{
+		this.Entity_List.remove(name);
+	}
+	
 	
 	// =======================================================================
 	// getEntity

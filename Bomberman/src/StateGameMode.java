@@ -41,6 +41,8 @@ public class StateGameMode implements InterfaceState
 			this.Cur_Gamescreen.getEntity("E1").moveX(-50 * elapsed_time);
 		if (KeyboardInput.getActionState(0, KeyboardInput.ACTION.MOVE_RIGHT) == true)
 			this.Cur_Gamescreen.getEntity("E1").moveX(50 * elapsed_time);
+		
+		// kollisionsabfrage
 	}
 
 	@Override

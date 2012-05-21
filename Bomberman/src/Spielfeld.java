@@ -1,59 +1,85 @@
+import java.awt.Graphics;
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.Vector;
 
-public class Spielfeld {
-
-	private final int[][] spielfeld;
-	
-	//Bomberman koordinaten
-	private int mx = 0;
-	private int my = 0;
-	
-	/**
-	 * Liste die alle Typen die passierbar sind gespeichert hat.
-	 * Aber nur Zahlen wie 0,1,2... die fuer die Typen stehen.
-	 * Ist Anfang noch leer.
-	 */
-	private LinkedList<Integer> passables = new LinkedList<Integer>();
-	
-	/**
-	 * Ueberprueft ob das aktuelle Feld des bombermans passierbar ist.
-	 * @return true wenn passierbar, false wenn nicht.
-	 */
-	public boolean canPass()
+public class Spielfeld extends Entity
+{
+	public static enum STATE
 	{
-		return (passables.contains(spielfeld[mx][my]));
-	}
+		NO_STATE,
+		GAME_RUNNING,
+		GAME_PAUSED,
+		GAME_OVER
+	};
+	
+	private STATE state = STATE.NO_STATE;
+	
+	private final int[][] spielfeld = new int[32 * 15][32 * 13];
+	
+	// spielfeld inhalt
+	private Vector<BombermanEntity> bomberman_entites = new Vector<BombermanEntity>();
+	private Vector<BombeEntity> bombe_entities = new Vector <BombeEntity>();
+	private Vector<ExplosionEntity> explosion_entities = new Vector <ExplosionEntity>();
+	private Vector<UnbreakableEntity> unbreakable_entities = new Vector <UnbreakableEntity>();
+	private Vector <BreakableEntity> breakable_entities = new Vector <BreakableEntity>();
+	
+	
+	
+	
 	
 	public Spielfeld(int sx, int sy)
 	{
-		spielfeld = new int[sx][sy]; //Spielfeld wird in der richtigen Größe angelegt
-		passables.add(0); //0=Leeres Feld wird passierbar gemacht
+		super("Background", sx, sy);
 	}
 	
     public static void main(String... args)
     {
-    	new Spielfeld(15,13); //15x13 Spielfeld erstellen.
+    	new Spielfeld(0,0); 
     }
+
+	@Override
+	public void collidedWith(Entity other) 
+	{
+		// nothing
+	}
+   
+	/*
+	public void draw(Graphics graphic_context)
+	{
+		super.draw(graphic_context);
+		// TODO
+	}
+	*/
+	
+	public void addEntity(Entity entity)
+	{
+	public void instance of BombermanEntity;
+	public void instance of BombeEntity;
+	public void instance of ExplosionEntity;
+	public void instance of UnbreakableEntity;
+	public void instance of BreakableEntity;
+	
+	
+	}
+	
+	public void deleteEntity(Entity entity)
+	{
+	public void instance of BombermanEntity;
+	public void instance of BombeEntity;
+	public void instance of ExplosionEntity;
+	public void instance of UnbreakableEntity;
+	public void instance of BreakableEntity;
+	}
+	
+	public void moveX(long delta)
+	{
+		return;
+	}
+	
+	public void moveY(long delta)
+	{
+		return;
+	}
     
-    /**
-     * Bomberman nach oben bewegen ein Feld
-     */
-    public void moveUp()
-    {
-    	if(my>0) //An der oberen Grenze soll er nicht mehr nach oben koennen.
-    	{
-    		my--;
-    		if(canPass()) //Schaut ob der Bomberman jetzt auf einem gueltigen Feld steht.
-    		{
-    			//Wenn ja
-    			System.out.println("Bewegt!");
-    		}
-    		else
-    		{
-    			//Wenn ja
-    			System.out.println("Leider ein Hindernis im Weg.");
-    			my++;//Bombermanzurueckbewegen
-    		}
-    	}
-    }
 }

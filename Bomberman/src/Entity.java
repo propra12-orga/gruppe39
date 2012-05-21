@@ -31,6 +31,8 @@ public abstract class Entity
 	// the rectangle used for other entities during collision resolution
 	private Rectangle him = new Rectangle();
 	
+	// TODO: mabye?
+	// private String name = new String();
 	
 	
 	// #######################################################################
