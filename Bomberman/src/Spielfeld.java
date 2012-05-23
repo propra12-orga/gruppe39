@@ -1,9 +1,6 @@
-import java.awt.Graphics;
-import java.util.ArrayList;
-import java.util.LinkedList;
+
 import java.util.Vector;
 
-import quicktime.qd3d.math.Vector2D;
 
 // Spielfeld darf nicht von Entity vererben, denn sie ist kein normales Entity !!
 public class Spielfeld // extends Entity

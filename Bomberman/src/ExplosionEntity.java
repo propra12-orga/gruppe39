@@ -18,9 +18,9 @@ public class ExplosionEntity extends Entity{
 	}
 
 	@Override
-	public void collidedWith(Entity other) {
-		// TODO Auto-generated method stub
-		
+	public void collidedWith(Entity other)
+	{
+		// do nothing		
 	}
 	public STATE getState()
 	{
@@ -29,10 +29,14 @@ public class ExplosionEntity extends Entity{
 	
 	public void setState(STATE state)
 	{
+		int x, y;
 		this.state = state;
 		if (state == STATE.EXPLODING)
 		{
+			x = this.getLocationX();
+			y = this.getLocationY();
 			
+			// hier werden die Eplosionfelder hinzugefügt, dafür wird aber das Spielfeld gebraucht.
 		}
 	}
 }

@@ -3,17 +3,16 @@ public class BombermanEntity extends Entity
 {
 	public static enum STATE
 	{
-		NO_STATE,
 		ALIVE,
 		DEAD
 	};
 	
-	private STATE state = STATE.NO_STATE;
+	private STATE state;
 	
 	public BombermanEntity(String sprite_name, int x, int y)
 	{
 		super(sprite_name, x, y);
-		this.setState(state);
+		this.state = STATE.ALIVE;
 	}
 
 	@Override
@@ -30,7 +29,17 @@ public class BombermanEntity extends Entity
 			setHorizontalSpeedMovement(0);
 			setVerticalSpeedMovement(0);
 		}
-		//else if ()
+		else if ( other instanceof BombeEntity)
+		{
+			setHorizontalSpeedMovement(0);
+			setVerticalSpeedMovement(0);
+		}
+		else if (other instanceof ExplosionEntity)
+		{
+			// andere Sachen mšglich; z.B.: vom Spielfeld lšschen
+			this.state = STATE.DEAD;
+			
+		}
 	}
 	
 	

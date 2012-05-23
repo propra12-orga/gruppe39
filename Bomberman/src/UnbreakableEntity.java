@@ -1,4 +1,4 @@
-import BombermanEntity.STATE;
+
 
 
 public class UnbreakableEntity extends Entity{
@@ -8,6 +8,7 @@ public class UnbreakableEntity extends Entity{
 		NO_STATE
 	};
 	
+	private STATE state;
 	public UnbreakableEntity(String sprite_name, int x, int y)
 	{
 		super(sprite_name, x, y);
@@ -20,6 +21,7 @@ public class UnbreakableEntity extends Entity{
 		// do nothing
 		
 	}
+	
 	public STATE getState()
 	{
 		return this.state;
