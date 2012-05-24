@@ -22,9 +22,9 @@ public class BreakableEntity extends Entity
 	{
 		if (other instanceof ExplosionEntity)
 		{
-			// hier sollte diese BreakableEntity von Spielfeld gelöscht werden. Das kann in zwei Möglichkeiten gemacht werden:
-			//  1- ein globales Objekt / Variable für Spielfeld damit man auf sie hier auch zugreiffen kann.
-			//  2- ein Thread, das ständig läuft und überprüft: falls STATE == BROKEN dann löschen
+			// hier sollte diese BreakableEntity von Spielfeld gelöscht werden. Das kann in zwei Moeglichkeiten gemacht werden:
+			//  1- ein globales Objekt / Variable furr Spielfeld damit man auf sie hier auch zugreiffen kann.
+			//  2- ein Thread, das staendig läuft und ueberprueft: falls STATE == BROKEN dann loeschen
 			this.state = STATE.BROKEN;
 		}
 		

@@ -5,7 +5,7 @@ import java.util.Vector;
 // Spielfeld darf nicht von Entity vererben, denn sie ist kein normales Entity !!
 public class Spielfeld // extends Entity
 {
-	// hochwahrscheinlich werden wir kein STATE für Spielfeld brauchen
+	// hochwahrscheinlich werden wir kein STATE fuer Spielfeld brauchen
 	public static enum STATE
 	{
 		NO_STATE,
@@ -17,8 +17,8 @@ public class Spielfeld // extends Entity
 	private STATE state = STATE.NO_STATE;
 	
 	/*
-	 * Ein Kästchen ist 32p breit und 32p hoch . 
-	 * => hat das Spielfeld insgesamt 15*13 Kästchen
+	 * Ein Kaestchen ist 32p breit und 32p hoch . 
+	 * => hat das Spielfeld insgesamt 15*13 Kaestchen
 	 */
 	private final int[][] spielfeld = new int[32 * 15][32 * 13];
 	
@@ -101,7 +101,7 @@ public class Spielfeld // extends Entity
 		}
 		else if (entity instanceof ExplosionEntity)
 		{
-			// man braucht also nur einen der Explosionen wegzumachen und alle anderen werden mitgelöscht.
+			// man braucht also nur einen der Explosionen wegzumachen und alle anderen werden mitgeloescht.
 			explosion_entities.clear();
 		}
 		else if (entity instanceof BreakableEntity)
@@ -138,7 +138,7 @@ public class Spielfeld // extends Entity
     		// gucken ob bomberman : es gibt nur einen deswegen get(0)
     		if ( (bomberman_entites.get(0).getLocationX() == x) && (bomberman_entites.get(0).getLocationY() == y) )
     			return bomberman_entites.get(0);
-    		// es gibt auch nur einen bomb ; später vielleicht mit mehreren bombermen
+    		// es gibt auch nur einen bomb ; spaeter vielleicht mit mehreren bombermen
     		else if ( (bombe_entites.get(0).getLocationX() == x) && (bombe_entites.get(0).getLocationY() == y) )
     			return bombe_entites.get(0);
     		

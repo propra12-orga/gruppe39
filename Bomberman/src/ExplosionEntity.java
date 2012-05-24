@@ -36,7 +36,7 @@ public class ExplosionEntity extends Entity{
 			x = this.getLocationX();
 			y = this.getLocationY();
 			
-			// hier werden die Eplosionfelder hinzugefügt, dafür wird aber das Spielfeld gebraucht.
+			// hier werden die Eplosionfelder hinzugefuegt, dafuer wird aber das Spielfeld gebraucht.
 		}
 	}
 }

@@ -36,7 +36,7 @@ public class BombermanEntity extends Entity
 		}
 		else if (other instanceof ExplosionEntity)
 		{
-			// andere Sachen mšglich; z.B.: vom Spielfeld lšschen
+			// andere Sachen moeglich; z.B.: vom Spielfeld lšschen
 			this.state = STATE.DEAD;
 			
 		}
