@@ -40,6 +40,12 @@ public class StateGameMode implements InterfaceState
 	@Override
 	public void main(long elapsed_time) 
 	{
+		// TODO
+		// - input abfrage und verarbeitung
+		// - kollisionsabfrage und neue position(en) berechnen, evtl. zustandsabfrage
+		// - zustandsabfrage und verarbeitung der zustaende der entities
+		
+		
 		// TODO: draft not working
 		if (KeyboardInput.getActionState(0, KeyboardInput.ACTION.MOVE_UP) == true)
 		{

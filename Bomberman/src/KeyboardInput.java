@@ -80,6 +80,11 @@ public class KeyboardInput extends KeyAdapter
 		}
 	}
 	
+	public static int getNumberPlayers()
+	{
+		return KeyboardInput.number_players;
+	}
+	
 	
 	
 	// =======================================================================
