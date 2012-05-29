@@ -6,7 +6,8 @@ public class ExplosionEntity extends Entity{
 	private static enum STATE
 	{
 		NO_STATE,
-		EXPLODING
+		EXPLODING,
+		EXPLODED
 	};
 	
 	private STATE state;
@@ -20,7 +21,28 @@ public class ExplosionEntity extends Entity{
 	@Override
 	public void collidedWith(Entity other)
 	{
-		// do nothing		
+		if (other instanceof BreakableEntity)
+		{
+			BreakableEntity bre_e = (BreakableEntity) other;
+			// hier sollte diese BreakableEntity von Spielfeld gelöscht werden. Das kann in zwei Möglichkeiten gemacht werden:
+			//  1- ein globales Objekt / Variable für Spielfeld damit man auf sie hier auch zugreiffen kann.
+			//  2- ein Thread, das ständig läuft und überprüft: falls STATE == BROKEN dann löschen
+			bre_e.setState(BreakableEntity.STATE.BROKEN);
+		}
+		// TODO: Bomberman und bombe ---> done!
+		if (other instanceof BombermanEntity)
+		{
+			// TODO...andere Sachen möglich; z.B.: vom Spielfeld löschen
+			BombermanEntity bom_e = (BombermanEntity) other;
+			bom_e.setState(BombermanEntity.STATE.DEAD);
+		}
+		if (other instanceof BombeEntity)
+		{ 
+			BombeEntity bomb_e = (BombeEntity) other;
+			bomb_e.setState(BombeEntity.STATE.EXPLODING);
+		}
+		
+		// else do nothing
 	}
 	public STATE getState()
 	{
@@ -36,7 +58,7 @@ public class ExplosionEntity extends Entity{
 			x = this.getLocationX();
 			y = this.getLocationY();
 			
-			// hier werden die Eplosionfelder hinzugefuegt, dafuer wird aber das Spielfeld gebraucht.
+			//TODO!!  hier werden die Explosionsfelder hinzugefügt, dafür wird aber das Spielfeld gebraucht.
 		}
 	}
 }

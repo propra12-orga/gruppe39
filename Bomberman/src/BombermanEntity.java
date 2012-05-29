@@ -23,7 +23,6 @@ public class BombermanEntity extends Entity
 			setHorizontalSpeedMovement(0);
 			setVerticalSpeedMovement(0);
 		}
-		
 		else if (other instanceof BreakableEntity)
 		{
 			setHorizontalSpeedMovement(0);
@@ -36,9 +35,14 @@ public class BombermanEntity extends Entity
 		}
 		else if (other instanceof ExplosionEntity)
 		{
-			// andere Sachen moeglich; z.B.: vom Spielfeld lšschen
-			this.state = STATE.DEAD;
+			// TODO...andere Sachen mšglich; z.B.: vom Spielfeld lšschen
+			this.state = STATE.DEAD; 
 			
+		}
+		else
+		{
+			this.setHorizontalSpeedMovement(1);
+			this.setVerticalSpeedMovement(1);
 		}
 	}
 	

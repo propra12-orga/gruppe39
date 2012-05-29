@@ -2,10 +2,9 @@
 import java.util.Vector;
 
 
-// Spielfeld darf nicht von Entity vererben, denn sie ist kein normales Entity !!
-public class Spielfeld // extends Entity
+public class Spielfeld 
 {
-	// hochwahrscheinlich werden wir kein STATE fuer Spielfeld brauchen
+	// hoechstwahrscheinlich werden wir kein STATE fŸr Spielfeld brauchen
 	public static enum STATE
 	{
 		NO_STATE,
@@ -17,8 +16,8 @@ public class Spielfeld // extends Entity
 	private STATE state = STATE.NO_STATE;
 	
 	/*
-	 * Ein Kaestchen ist 32p breit und 32p hoch . 
-	 * => hat das Spielfeld insgesamt 15*13 Kaestchen
+	 * Ein KŠstchen ist 32p breit und 32p hoch . 
+	 * => hat das Spielfeld insgesamt 15*13 KŠstchen
 	 */
 	private final int[][] spielfeld = new int[32 * 15][32 * 13];
 	
@@ -26,13 +25,12 @@ public class Spielfeld // extends Entity
 	
 	
 	// spielfeld inhalt ::: 
-	private Vector<BombermanEntity> bomberman_entites = new Vector<BombermanEntity>();
+	private Vector<BombermanEntity> bomberman_entities = new Vector<BombermanEntity>();
 	private Vector<BombeEntity> bombe_entities = new Vector <BombeEntity>();
 	private Vector<ExplosionEntity> explosion_entities = new Vector <ExplosionEntity>();
 	private Vector<UnbreakableEntity> unbreakable_entities = new Vector <UnbreakableEntity>();
 	private Vector<BreakableEntity> breakable_entities = new Vector <BreakableEntity>();
 
-	private Vector<BombermanEntity> bombe_entites;
 	
 	private void fillUnbreakable()
 	{
@@ -41,7 +39,7 @@ public class Spielfeld // extends Entity
 		{
 			for (j=1; j<13; j+=2)
 			{
-				e = new UnbreakableEntity("Unbreakable",i*32, j*32);
+				e = new UnbreakableEntity("Tile_Unbreakable",i*32, j*32);
 				unbreakable_entities.add((UnbreakableEntity) e);
 			}
 		}
@@ -50,37 +48,43 @@ public class Spielfeld // extends Entity
 	private void makeBomberman()
 	{
 		e = new BombermanEntity("Bomberman", 0, 32);
-		bomberman_entites.add((BombermanEntity) e);
+		bomberman_entities.add((BombermanEntity) e);
 	}
 	
 	private void makeBreakable()
-	{
-		e = new BreakableEntity("Breakable", 0, 32*4);
+	{   int i,j;
+	    for (i=0; i<15; i+=2)
+	    {	
+	    	{
+				for (j=0; j<13; j+=2)
+	    
+		e = new BreakableEntity("Tile_Breakable", i*32, j*4);
 		breakable_entities.add((BreakableEntity) e);
-	}
+	       }
+	    } 	
+	}    
 	
 	public Spielfeld()
 	{
 		fillUnbreakable();
 		makeBomberman();
-		makeBreakable();
+		//makeBreakable();
 	}
-/*	
-	public Spielfeld(int sx, int sy)
+	
+	public void addEntitiesToScreen(Gamescreen cur_gamescreen)
 	{
-		super("Background", sx, sy);
+		for (int i = 0; i < this.unbreakable_entities.size(); i++)
+		{
+			cur_gamescreen.addEntityToScreen("unbreakable" + i, this.unbreakable_entities.get(i));
+		}
+		
+		for (int i = 0; i < this.bomberman_entities.size(); i++)
+		{
+			cur_gamescreen.addEntityToScreen("bomberman" + i, this.bomberman_entities.get(i));
+		}
+		
 	}
-	*/
 
-
-   
-	/*
-	public void draw(Graphics graphic_context)
-	{
-		super.draw(graphic_context);
-		// TODO
-	}
-	*/
 	
 	public void addBomb(BombeEntity bomb)
 	{
@@ -97,11 +101,11 @@ public class Spielfeld // extends Entity
 		if (entity instanceof BombermanEntity)
 		{
 			// es gibt nur einen Bomberman
-			bomberman_entites.clear();
+			bomberman_entities.clear();
 		}
 		else if (entity instanceof ExplosionEntity)
 		{
-			// man braucht also nur einen der Explosionen wegzumachen und alle anderen werden mitgeloescht.
+			// man braucht also nur einen der Explosionen weg zu machen und alle anderen werden mitgelšscht.
 			explosion_entities.clear();
 		}
 		else if (entity instanceof BreakableEntity)
@@ -109,8 +113,7 @@ public class Spielfeld // extends Entity
 			BreakableEntity br_e = (BreakableEntity) entity; 
 			
 			for (int i =0; i<breakable_entities.size(); i++)
-				if (       (breakable_entities.get(i).getLocationX() == br_e.getLocationX() )
-						&& (breakable_entities.get(i).getLocationY() == br_e.getLocationY() )  )
+				if (breakable_entities.get(i) == br_e )
 				{
 					breakable_entities.remove(i);
 					break;
@@ -135,12 +138,15 @@ public class Spielfeld // extends Entity
     	}
     	else
     	{
-    		// gucken ob bomberman : es gibt nur einen deswegen get(0)
-    		if ( (bomberman_entites.get(0).getLocationX() == x) && (bomberman_entites.get(0).getLocationY() == y) )
-    			return bomberman_entites.get(0);
-    		// es gibt auch nur einen bomb ; spaeter vielleicht mit mehreren bombermen
-    		else if ( (bombe_entites.get(0).getLocationX() == x) && (bombe_entites.get(0).getLocationY() == y) )
-    			return bombe_entites.get(0);
+    		Vector<BombermanEntity> bomberman_entities;
+		// gucken ob bomberman : es gibt nur einen deswegen get(0)
+    	for (i=0; i < this.bomberman_entities.size(); i++)	
+    		if ( (this.bomberman_entities.get(0).getLocationX() == x) && (this.bomberman_entities.get(0).getLocationY() == y) )
+    			return this.bomberman_entities.get(0);
+    		// es gibt auch nur einen bomb ; spŠter vielleicht mit mehreren bombermen
+    	 for (i=0; i<this.bombe_entities.size(); i++)
+    		 if ( (this.bombe_entities.get(0).getLocationX() == x) && (this.bombe_entities.get(0).getLocationY() == y) )
+    			return this.bombe_entities.get(0);
     		
     		else
     		{

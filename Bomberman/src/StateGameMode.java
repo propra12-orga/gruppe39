@@ -17,6 +17,9 @@ public class StateGameMode implements InterfaceState
 		this.Cur_Gamescreen = Cur_Screen;
 	}
 	
+	private Spielfeld spielfeld;
+	
+
 	@Override
 	public void init() 
 	{
@@ -24,25 +27,46 @@ public class StateGameMode implements InterfaceState
 		KeyboardInput.init(1);
 		
 		// TODO Auto-generated method stub
-		this.Cur_Gamescreen.addEntityToScreen("E1", new ExampleEntity("Bomberman", 0, 0));
+		this.spielfeld=  new Spielfeld();
+		spielfeld.addEntitiesToScreen(this.Cur_Gamescreen);
 		
-		this.Cur_Gamescreen.getEntity("E1").setHorizontalSpeedMovement(5);
-		this.Cur_Gamescreen.getEntity("E1").setVerticalSpeedMovement(5);
+		//this.Cur_Gamescreen.addEntityToScreen("E1", new ExampleEntity("Bomberman", 0, 0));
+		
+		this.Cur_Gamescreen.getEntity("bomberman0").setHorizontalSpeedMovement(5);
+		this.Cur_Gamescreen.getEntity("bomberman0").setVerticalSpeedMovement(5);
+	
 	}
 
 	@Override
 	public void main(long elapsed_time) 
 	{
+		// TODO: draft not working
 		if (KeyboardInput.getActionState(0, KeyboardInput.ACTION.MOVE_UP) == true)
-			this.Cur_Gamescreen.getEntity("E1").moveY(50 * elapsed_time);
+		{
+			this.Cur_Gamescreen.getEntity("bomberman0").moveY(50 * elapsed_time);
+		}
+			
 		if (KeyboardInput.getActionState(0, KeyboardInput.ACTION.MOVE_DOWN) == true)
-			this.Cur_Gamescreen.getEntity("E1").moveY(-50 * elapsed_time);
+			this.Cur_Gamescreen.getEntity("bomberman0").moveY(-50 * elapsed_time);
 		if (KeyboardInput.getActionState(0, KeyboardInput.ACTION.MOVE_LEFT) == true)
-			this.Cur_Gamescreen.getEntity("E1").moveX(-50 * elapsed_time);
+			this.Cur_Gamescreen.getEntity("bomberman0").moveX(-50 * elapsed_time);
 		if (KeyboardInput.getActionState(0, KeyboardInput.ACTION.MOVE_RIGHT) == true)
-			this.Cur_Gamescreen.getEntity("E1").moveX(50 * elapsed_time);
+		{
+			int old_cord = this.Cur_Gamescreen.getEntity("bomberman0").getLocationX();
+			this.Cur_Gamescreen.getEntity("bomberman0").moveX(50 * elapsed_time);
+			int new_cord = this.Cur_Gamescreen.getEntity("bomberman0").getLocationX();
+			
+			if (this.Cur_Gamescreen.getEntity("bomberman0").collidesWith(spielfeld.getEntity(new_cord, 
+					(this.Cur_Gamescreen.getEntity("bomberman0").getLocationY()))))
+			{
+				this.Cur_Gamescreen.getEntity("bomberman0").setX(old_cord);
+				System.out.println("ccc");
+			}
+		}
+			
 		
 		// kollisionsabfrage
+		
 	}
 
 	@Override

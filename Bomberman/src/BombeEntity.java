@@ -6,6 +6,7 @@ public class BombeEntity extends Entity{
 	public static enum STATE
 	{
 		TICKING,
+		EXPLODING,
 		EXPLODED
 	};
 	 
@@ -21,7 +22,7 @@ public class BombeEntity extends Entity{
 	public void collidedWith(Entity other)
 	{
 		// passiert nichts
-		// TODO Auto-generated method stub
+		// TODO: if else abfrage
 		
 	}
 	public STATE getState()

@@ -20,15 +20,7 @@ public class BreakableEntity extends Entity
 	@Override
 	public void collidedWith(Entity other)
 	{
-		if (other instanceof ExplosionEntity)
-		{
-			// hier sollte diese BreakableEntity von Spielfeld gelöscht werden. Das kann in zwei Moeglichkeiten gemacht werden:
-			//  1- ein globales Objekt / Variable furr Spielfeld damit man auf sie hier auch zugreiffen kann.
-			//  2- ein Thread, das staendig läuft und ueberprueft: falls STATE == BROKEN dann loeschen
-			this.state = STATE.BROKEN;
-		}
 		
-		// else do nothing
 	}
 	public STATE getState()
 	{
