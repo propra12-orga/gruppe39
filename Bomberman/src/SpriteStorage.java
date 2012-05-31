@@ -9,15 +9,15 @@ import java.util.HashMap;
 
 import javax.imageio.ImageIO;
 
-//=======================================================================
-// SpriteStorage
-// desc: 	this class provides a storage for all the sprites/images
-// 			used in the whole game. we have to fill it on startup
-//			and then we can access the sprites very easy by just using
-//			the key/name we gave them when adding them to the storage
-//			by that, we dont have to care about loading sprites anymore
-//			during the mainloop
-//=======================================================================
+/***************************************************************************
+* SpriteStorage
+* desc: 	this class provides a storage for all the sprites/images
+* 			used in the whole game. we have to fill it on startup
+*			and then we can access the sprites very easy by just using
+*			the key/name we gave them when adding them to the storage
+*			by that, we dont have to care about loading sprites anymore
+*			during the mainloop
+***************************************************************************/
 public class SpriteStorage 
 {
 	// #######################################################################
@@ -35,25 +35,25 @@ public class SpriteStorage
 	// Public functions
 	// #######################################################################
 
-	// =======================================================================
-	// get
-	// desc: 	returns our single instance of the sprite storage
-	// param: 	void
-	// ret:		our single instance
-	// =======================================================================
+	/***************************************************************************
+	* get
+	* desc: 	returns our single instance of the sprite storage
+	* @param: 	void
+	* @return:		our single instance
+	***************************************************************************/
 	public static SpriteStorage get() 
 	{
 		return single;
 	}
 	
 	
-	// =======================================================================
-	// get
-	// desc: 	get a sprite from the storage
-	// param: 	String sprite_name: name of the sprite, which got its image in
-	//			the folder "Images"
-	// ret:		if the sprite was found, it is returned, else null
-	// =======================================================================
+	/***************************************************************************
+	* get
+	* desc: 	get a sprite from the storage
+	* @param: 	String sprite_name: name of the sprite, which got its image in
+	*			the folder "Images"
+	* @return:		if the sprite was found, it is returned, else null
+	***************************************************************************/
 	public Sprite getSprite(String sprite_name) 
 	{
 		// if we've already got the sprite in the cache

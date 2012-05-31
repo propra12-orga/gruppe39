@@ -2,13 +2,13 @@ import java.awt.Graphics;
 import java.util.HashMap;
 
 
-//=======================================================================
-// Gamescreen
-// desc: 	keeps track of all entities on one screen. simply add all your
-// 			entities, you want to have to appear on your screen to this.
-//			everything gets updated within the mainloop automatically,
-//			so you dont have to keep track of that.
-//=======================================================================
+/***********************************************************************
+* Gamescreen
+* desc: 	keeps track of all entities on one screen. simply add all your
+* 			entities, you want to have to appear on your screen to this.
+*			everything gets updated within the mainloop automatically,
+*			so you dont have to keep track of that.
+**************************************************************************/
 public class Gamescreen 
 {
 	// #######################################################################
@@ -23,11 +23,11 @@ public class Gamescreen
 	// Public functions
 	// #######################################################################
 	
-	// =======================================================================
-	// Gamescreen
-	// desc: nothing important to say
-	// param: void
-	// =======================================================================
+	/*************************************************************************
+	* Gamescreen
+	* desc: nothing important to say
+	* @param: void
+	***************************************************************************/ 
 	public Gamescreen()
 	{		
 		// create our entity "list"
@@ -35,13 +35,13 @@ public class Gamescreen
 	}
 	
 	
-	// =======================================================================
-	// addEntityToScreen
-	// desc: 	add a single entity with an identification string to our screen
-	// param: 	String Name_Entity: identification name for our entity
-	// 			Entity E: our entity we want to add
-	// ret:		void
-	// =======================================================================
+	/************************************************************************
+	* addEntityToScreen
+	* desc: 	add a single entity with an identification string to our screen
+	* @param: 	String Name_Entity: identification name for our entity
+	* 			Entity E: our entity we want to add
+	* @return:		void
+	**************************************************************************/ 
 	public void addEntityToScreen(String Name_Entity, Entity E)
 	{
 		// error check
@@ -56,14 +56,15 @@ public class Gamescreen
 	}
 	
 	
-	// =======================================================================
-	// addEntitiesToScreen
-	// desc: 	adds a list of entities with identification string to our screen 
-	// param: 	String[] Name_Entity: list with strings as names for every 
-	//			single entity (same length as E!)
-	// 			Entity[] E: list with entities (same length as Name_Entity!)
-	// ret: 	void
-	// =======================================================================
+	/*******************************************************************************
+	* addEntitiesToScreen
+	* desc: 	adds a list of entities with identification string to our screen 
+	* @param: 	String[] Name_Entity: list with strings as names for every 
+	*			single entity (same length as E!)
+	* 			Entity[] E: list with entities (same length as Name_Entity!)
+	* @return: 	void
+	*****************************************************************************/ 
+
 	public void addEntitiesToScreen(String[] Name_Entity, Entity[] E)
 	{
 		// error check
@@ -102,12 +103,12 @@ public class Gamescreen
 	}
 	
 	
-	// =======================================================================
-	// getEntity
-	// desc: 	returns an entity identified by its name
-	// param: 	String Name_Entity: name of the entity we want to have
-	// ret: 	returns the entity if its in our list, else null
-	// =======================================================================
+	/***********************************************************************
+	* getEntity
+	* desc: 	returns an entity identified by its name
+	* @param: 	String Name_Entity: name of the entity we want to have
+	* return: 	returns the entity if its in our list, else null
+	***************************************************************************/
 	public Entity getEntity(String Name_Entity)
 	{
 		// error checks
@@ -141,12 +142,12 @@ public class Gamescreen
 	}
 	
 	
-	// =======================================================================
-	// drawEntitesToScreen
-	// dsec: 	draws all entities of our list to the graphical context provided
-	// param: 	Graphics Graphics_Context: the graphical context to draw everything to
-	// ret: 	void
-	// =======================================================================	
+	/**************************************************************************
+	* drawEntitesToScreen
+	* dsec: 	draws all entities of our list to the graphical context provided
+	* @param: 	Graphics Graphics_Context: the graphical context to draw everything to
+	* @return: 	void
+	****************************************************************************/	
 	public void drawEntitesToScreen(Graphics Graphics_Context)
 	{
 		// error check

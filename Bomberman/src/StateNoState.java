@@ -1,9 +1,9 @@
 
-//=======================================================================
-// StateNoState
-// desc: 	just a dummy used for initializing the engine and if
-//			we are running into some unknown states
-//=======================================================================
+/***************************************************************************
+* StateNoState
+* desc: 	just a dummy used for initializing the engine and if
+*			we are running into some unknown states
+***************************************************************************/
 public class StateNoState implements InterfaceState
 {
 	public StateNoState()

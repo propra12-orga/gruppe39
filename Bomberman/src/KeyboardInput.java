@@ -4,12 +4,12 @@ import java.awt.event.KeyEvent;
 // TODO: put the action enum and a few other things, which
 // can be used into a seperate class (if we are going to have joysticks
 // or any other input device supported)
-//=======================================================================
-// KeyboardInput
-// desc: 	this class handles all the keyboard input and provides
-//			an interface to access a fixed list of action states, which
-//			are used to write the gameflow
-//=======================================================================
+/***************************************************************************
+* KeyboardInput
+* desc: 	this class handles all the keyboard input and provides
+*			an interface to access a fixed list of action states, which
+*			are used to write the gameflow
+***************************************************************************/
 public class KeyboardInput extends KeyAdapter
 {	
 	// #######################################################################
@@ -41,12 +41,12 @@ public class KeyboardInput extends KeyAdapter
 	// Public functions
 	// #######################################################################
 
-	// =======================================================================
-	// init
-	// desc: 	this has to be called, else we wont have anything available
-	// param: 	int number_players: create interfaces for a number of players (at least 1)
-	// ret:		void
-	// =======================================================================
+	/***************************************************************************
+	* init
+	* desc: 	this has to be called, else we wont have anything available
+	* @param: 	int number_players: create interfaces for a number of players (at least 1)
+	* @return:		void
+	***************************************************************************/
 	public static void init(int number_players)
 	{
 		DebugConsole.Print("Initalizing Keyboardinput, number of players: " + number_players);
@@ -87,14 +87,14 @@ public class KeyboardInput extends KeyAdapter
 	
 	
 	
-	// =======================================================================
-	// configSetActionToKey
-	// desc: 	assign a key to an action ("keyboard settings")
-	// param: 	int player: configuration of which player (starting with 0 for player 1)
-	//			int key_code: key, which has to be assign to the action a
-	//			ACTION a: which action has to get the key_code
-	// ret:		void
-	// =======================================================================
+	/***************************************************************************
+	* configSetActionToKey
+	* desc: 	assign a key to an action ("keyboard settings")
+	* @param: 	int player: configuration of which player (starting with 0 for player 1)
+	*			int key_code: key, which has to be assign to the action a
+	*			ACTION a: which action has to get the key_code
+	* @return:		void
+	***************************************************************************/
 	public static void configSetActionToKey(int player, int key_code, ACTION a)
 	{
 		// error check
@@ -110,13 +110,13 @@ public class KeyboardInput extends KeyAdapter
 	}
 	
 	
-	// =======================================================================
-	// setDefaultKeyConfig
-	// desc: 	set a default key configuration for a player
-	// param: 	int player: player, which recvices the default config
-	//			starting with player 1 as 0
-	// ret:		void
-	// =======================================================================
+	/***************************************************************************
+	* setDefaultKeyConfig
+	* desc: 	set a default key configuration for a player
+	* @param: 	int player: player, which recvices the default config
+	*			starting with player 1 as 0
+	* @return:		void
+	***************************************************************************/
 	public static void setDefaultKeyConfig(int player)
 	{
 		// error check
@@ -139,12 +139,12 @@ public class KeyboardInput extends KeyAdapter
 	}
 	
 	
-	// =======================================================================
-	// setKeyConfigNone
-	// desc: 	delete a complete key config of a player
-	// param: 	int player: delete the config of this player (starting with 0)
-	// ret:		void
-	// =======================================================================
+	/***************************************************************************
+	* setKeyConfigNone
+	* desc: 	delete a complete key config of a player
+	* @param: 	int player: delete the config of this player (starting with 0)
+	* @return:		void
+	***************************************************************************/
 	public static void setKeyConfigNone(int player)
 	{
 		// error check
@@ -164,13 +164,13 @@ public class KeyboardInput extends KeyAdapter
 	}
 	
 	
-	// =======================================================================
-	// getActionState
-	// desc: 	returns if a specified action of a player was taken
-	// param: 	int player: specify player
-	//			ACTION a: action to check on
-	// ret:		true, if action was taken, false if not
-	// =======================================================================
+	/***************************************************************************
+	* getActionState
+	* desc: 	returns if a specified action of a player was taken
+	* @param: 	int player: specify player
+	*			ACTION a: action to check on
+	* @return:		true, if action was taken, false if not
+	***************************************************************************/
 	public static boolean getActionState(int player, ACTION a)
 	{
 		// error check
@@ -180,19 +180,19 @@ public class KeyboardInput extends KeyAdapter
 			return false;
 		}
 		
-		// return our current state of action
+		// @return our current state of action
 		return KeyboardInput.action[player][a.ordinal()];
 	}
 	
 	
-	// =======================================================================
-	// keyPressed
-	// desc: 	notification from AWT that a key has been pressed. Note that
-	//  		a key being pressed is equal to being pushed down but *NOT*
-	// 			released. Thats where keyTyped() comes in.
-	// param: 	KeyEvent e: the details of the key that was pressed 
-	// ret:		void
-	// =======================================================================
+	/***************************************************************************
+	* keyPressed
+	* desc: 	notification from AWT that a key has been pressed. Note that
+	*  		a key being pressed is equal to being pushed down but *NOT*
+	* 			released. Thats where keyTyped() comes in.
+	* @param: 	KeyEvent e: the details of the key that was pressed 
+	* @return:		void
+	***************************************************************************/
 	public void keyPressed(KeyEvent e) 
 	{
 		// if we havnt initalized  anything, skip
@@ -211,12 +211,12 @@ public class KeyboardInput extends KeyAdapter
 	}
 	
 	
-	// =======================================================================
-	// keyReleased
-	// desc: 	notification from AWT that a key has been released.
-	// param: 	KeyEvent e: the details of the key that was pressed 
-	// ret:		void
-	// =======================================================================
+	/*************************************************************************** 
+	* keyReleased
+	* desc: 	notification from AWT that a key has been released.
+	* @param: 	KeyEvent e: the details of the key that was pressed 
+	* @return:		void
+	***************************************************************************/
 	public void keyReleased(KeyEvent e) 
 	{
 		// if we havnt initalized  anything, skip
@@ -235,13 +235,13 @@ public class KeyboardInput extends KeyAdapter
 	}
 
 	
-	// =======================================================================
-	// keyTyped
-	// desc: 	notification from AWT that a key has been typed. Note that
-	//		 	typing a key means to both press and then release it.
-	// param: 	KeyEvent e: the details of the key that was pressed 
-	// ret:		void
-	// =======================================================================
+	/***************************************************************************
+	* keyTyped
+	* desc: 	notification from AWT that a key has been typed. Note that
+	*		 	typing a key means to both press and then release it.
+	* @param: 	KeyEvent e: the details of the key that was pressed 
+	* @return:		void
+	***************************************************************************/
 	public void keyTyped(KeyEvent e) 
 	{
 		// TODO: ?

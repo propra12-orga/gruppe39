@@ -1,10 +1,10 @@
 
-//=======================================================================
-// StateGameMode
-// desc: 	this state resembles our current running game, aka where 
-//			a player can actually blow stuff up
-//			for more information on details, see the corresponding interface
-//=======================================================================
+/*********************************************************************
+* StateGameMode
+* desc: 	this state resembles our current running game, aka where 
+*			a player can actually blow stuff up
+*			for more information on details, see the corresponding interface
+**************************************************************************/
 public class StateGameMode implements InterfaceState
 {
 	private Gamestate Cur_Gamestate;

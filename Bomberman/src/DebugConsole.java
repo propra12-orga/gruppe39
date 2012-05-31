@@ -1,10 +1,10 @@
 
-// =======================================================================
-// DebugConsole
-// desc: 	small class, providing simple calls to print some quick and
-//			formated information to the java console, for debugging
-//			purpose only, obviously
-// =======================================================================
+/***************************************************************************
+* DebugConsole
+* desc: 	small class, providing simple calls to print some quick and
+*			formated information to the java console, for debugging
+*			purpose only, obviously
+***************************************************************************/
 public class DebugConsole 
 {
 	// #######################################################################
@@ -19,28 +19,28 @@ public class DebugConsole
 	// Public functions
 	// #######################################################################
 
-	// =======================================================================
-	// setVerboseLevel
-	// desc: 	set the verbose level for our session
-	// param: 	int level: 	0 = nothing
-	//						1 = print errors only with little additional information
-	//						2 = print errors and normal text with little additional information
-	//						3 = print errors only with much additional information
-	//						4 = print errors and normal text with much additional information
-	// ret:		void
-	// =======================================================================
+	/***************************************************************************
+	* setVerboseLevel
+	* desc: 	set the verbose level for our session
+	* @param: 	int level: 	0 = nothing
+	*						1 = print errors only with little additional information
+	*						2 = print errors and normal text with little additional information
+	*						3 = print errors only with much additional information
+	*						4 = print errors and normal text with much additional information
+	* @return:		void
+	***************************************************************************/
 	public static void setVerboseLevel(int level)
 	{
 		DebugConsole.verbose_level = level;
 	}
 	
 	
-	// =======================================================================
-	// PrintError
-	// desc: 	prints an error formated massage to the screen
-	// param: 	String Text: our text we want ot get printed
-	// ret:		void
-	// =======================================================================
+	/***************************************************************************
+	* PrintError
+	* desc: 	prints an error formated massage to the screen
+	* @param: 	String Text: our text we want ot get printed
+	* @return:		void
+	***************************************************************************/
 	public static void PrintError(String Text)
 	{
 		if (verbose_level >= 1)
@@ -66,12 +66,12 @@ public class DebugConsole
 	}
 	
 	
-	// =======================================================================
-	// Print
-	// desc: 	prints a normal formated massage to the screen
-	// param: 	String Text: our text we want ot get printed
-	// ret:		void
-	// =======================================================================
+	/***************************************************************************
+	* Print
+	* desc: 	prints a normal formated massage to the screen
+	* @param: 	String Text: our text we want ot get printed
+	* @return:		void
+	***************************************************************************/
 	public static void Print(String Text)
 	{
 		if (verbose_level >= 2)

@@ -1,9 +1,9 @@
 
-//=======================================================================
-// StateGameMode
-// desc: 	main menu of the whole game.
-//			for more information on details, see the corresponding interface
-//=======================================================================
+/***************************************************************************
+* StateGameMode
+* desc: 	main menu of the whole game.
+*			for more information on details, see the corresponding interface
+***************************************************************************/
 public class StateMainMenu implements InterfaceState
 {
 	private Gamestate Cur_Gamestate;

@@ -35,11 +35,11 @@ public class Bomberman
 	// Public functions
 	// #######################################################################
 
-	// =======================================================================
-	// main
-	// desc: program entry point
-	// param: void
-	// =======================================================================
+	/*************************************************************************
+	* main
+	* desc: program entry point
+	* @param: void
+	**************************************************************************/
 	public static void main(String[] args)
 	{
 		// DEBUG: set your level of verbose here, to see debug output
@@ -58,12 +58,12 @@ public class Bomberman
 	}
 
 
-	// =======================================================================
-	// init
-	// desc: 	initializing important parts of the engine
-	// param: 	void
-	// ret: 	void
-	// =======================================================================
+	/*************************************************************************
+	* init
+	* desc: 	initializing important parts of the engine
+	* @param: 	void
+	* @return: 	void
+	**************************************************************************/
 	public void init()
 	{
 		DebugConsole.Print("Initializing...");
@@ -86,12 +86,12 @@ public class Bomberman
 	}
 	
 	
-	// =======================================================================
-	// gameLoop
-	// desc: 	looping through all the important parts for the game to run
-	// param: 	void
-	// ret: 	void
-	// =======================================================================
+	/**************************************************************************
+	* gameLoop
+	* desc: 	looping through all the important parts for the game to run
+	* @param: 	void
+	* @return: 	void
+	***************************************************************************/
 	public void gameLoop()
 	{		
 		DebugConsole.Print("Starting Gameloop");
@@ -175,12 +175,12 @@ public class Bomberman
 	}
 	
 	
-	// =======================================================================
-	// shutdown
-	// desc: 	cleaning up stuff, if there is any
-	// param: 	void
-	// ret: 	void
-	// =======================================================================	
+	/************************************************************************
+	* shutdown
+	* desc: 	cleaning up stuff, if there is any
+	* @param: 	void
+	* @return: 	void
+	*************************************************************************/	
 	public void shutdown()
 	{
 		DebugConsole.Print("Shutting down...");

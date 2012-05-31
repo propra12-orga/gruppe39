@@ -2,15 +2,15 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 
 
-//=======================================================================
-// Entity
-// desc: 	an entity resembles an object in the game. it has its own 
-//			sprite/picture, its own radius for collision and few other
-//			attributes. its an abstract class, so for a special entity
-//			in your game, you have to create a separate class which
-//			extends all the attributes of this one and add a the 
-//			characteristic ones
-//=======================================================================
+/***************************************************************************
+* Entity
+* desc: 	an entity resembles an object in the game. it has its own 
+*			sprite/picture, its own radius for collision and few other
+*			attributes. its an abstract class, so for a special entity
+*			in your game, you have to create a separate class which
+*			extends all the attributes of this one and add a the 
+*			characteristic ones
+***************************************************************************/
 public abstract class Entity 
 {
 	// #######################################################################
@@ -39,13 +39,13 @@ public abstract class Entity
 	// Public functions
 	// #######################################################################
 	
-	// =======================================================================
-	// Entity
-	// desc: 	construct a entity based on a sprite image and a location.
-	// param: 	String sprite_name: name of the sprite loaded into our storage
-	//			int x: initial x cord of the entity
-	//			int y: initial y cord of the entity
-	// =======================================================================
+	/***************************************************************************
+	* Entity
+	* desc: 	construct a entity based on a sprite image and a location.
+	* @param: 	String sprite_name: name of the sprite loaded into our storage
+	*			int x: initial x cord of the entity
+	*			int y: initial y cord of the entity
+	***************************************************************************/
 	public Entity(String sprite_name, int x, int y) 
 	{
 		this.sprite = SpriteStorage.get().getSprite(sprite_name);
@@ -66,12 +66,12 @@ public abstract class Entity
 	}
 	
 	
-	// =======================================================================
-	// moveX
-	// desc: 	move the entity based on a certain amount of time passing
-	// param: 	long delta: amount of time passed in milliseconds
-	// ret:		void
-	// =======================================================================
+	/***************************************************************************
+	* moveX
+	* desc: 	move the entity based on a certain amount of time passing
+	* @param: 	long delta: amount of time passed in milliseconds
+	* @return:		void
+	***************************************************************************/
 	public void moveX(long delta) 
 	{
 		// update the location of the entity based on move speeds
@@ -85,109 +85,109 @@ public abstract class Entity
 	}
 	
 	
-	// =======================================================================
-	// setHorizontalSpeedMovement
-	// desc: 	obvious
-	// param: 	double dx: horizontal speed in (pixels/sec)
-	// ret:		void
-	// =======================================================================
+	/***************************************************************************
+	* setHorizontalSpeedMovement
+	* desc: 	obvious
+	* @param: 	double dx: horizontal speed in (pixels/sec)
+	* @return:		void
+	***************************************************************************/ 
 	public void setHorizontalSpeedMovement(double dx) 
 	{
 		this.dx = dx;
 	}
 
 	
-	// =======================================================================
-	// setVerticalSpeedMovement
-	// desc: 	obvious
-	// param: 	double dx: vertical speed in (pixels/sec)
-	// ret:		void
-	// =======================================================================
+	/***************************************************************************
+	* setVerticalSpeedMovement
+	* desc: 	obvious
+	* @param: 	double dx: vertical speed in (pixels/sec)
+	* @return:		void
+	***************************************************************************/
 	public void setVerticalSpeedMovement(double dy) 
 	{
 		this.dy = dy;
 	}
 	
 	
-	// =======================================================================
-	// getHorizontalSpeedMovement
-	// desc: 	obvious
-	// param: 	void
-	// ret:		return horizontal speed in (pixels/sec)
-	// =======================================================================
+	/***************************************************************************
+	* getHorizontalSpeedMovement
+	* desc: 	obvious
+	* @param: 	void
+	* @return:		return horizontal speed in (pixels/sec)
+	***************************************************************************/
 	public double getHorizontalSpeedMovement() 
 	{
 		return dx;
 	}
 
 	
-	// =======================================================================
-	// getVerticalSpeedMovement
-	// desc: 	obvious
-	// param: 	void
-	// ret:		return vertical speed in (pixels/sec)
-	// =======================================================================
+	/***************************************************************************
+	* getVerticalSpeedMovement
+	* desc: 	obvious
+	* @param: 	void
+	* @return:		return vertical speed in (pixels/sec)
+	***************************************************************************/
 	public double getVerticalSpeedMovement() 
 	{
 		return dy;
 	}
 	
 	
-	// =======================================================================
-	// draw
-	// desc: 	draw entity to provided graphics context
-	// param: 	Graphics graphics_context: the context to draw the entity to
-	// ret:		void
-	// =======================================================================
+	/***************************************************************************
+	* draw
+	* desc: 	draw entity to provided graphics context
+	* @param: 	Graphics graphics_context: the context to draw the entity to
+	* @return:		void
+	***************************************************************************/
 	public void draw(Graphics graphics_context) 
 	{
 		sprite.draw(graphics_context, (int) x, (int) y);
 	}
 	
 	
-	// =======================================================================
-	// doLogic
-	// desc: 	do the logic associated with this entity. this method
-	//			will be called periodically based on game events
-	// param: 	void
-	// ret:		void
-	// =======================================================================
+	/*****************************************************************************
+	* doLogic
+	* desc: 	do the logic associated with this entity. this method
+	*			will be called periodically based on game events
+	* @param: 	void
+	* @return:		void
+	***************************************************************************/
 	public void doLogic() 
 	{
 		// nothing here
 	}
 	
 	
-	// =======================================================================
-	// getLocationX
-	// desc: 	obvious
-	// param: 	void
-	// ret:		return current x location
-	// =======================================================================
+	/***************************************************************************
+	* getLocationX
+	* desc: 	obvious
+	* @param: 	void
+	* @return:		return current x location
+	***************************************************************************/
 	public int getLocationX() 
 	{
 		return (int) x;
 	}
 
 	
-	// =======================================================================
-	// getLocationY
-	// desc: 	obvious
-	// param: 	void
-	// ret:		return current y location
-	// =======================================================================
+	/***************************************************************************
+	* getLocationY
+	* desc: 	obvious
+	* @param: 	void
+	* @return:		return current y location
+	***************************************************************************/
 	public int getLocationY() 
 	{
 		return (int) y;
 	}
 	
 	
-	// =======================================================================
-	// collidesWith
-	// desc: 	check if this entity colides with another
-	// param: 	Entity other: the other entity to check the collision against
-	// ret:		true if we collide with provided entity, false if not
-	// =======================================================================
+	/***************************************************************************
+	* collidesWith
+	* desc: 	check if this entity collides with another
+	* @param: 	Entity other: the other entity to check the collision against
+	* @return:		true if we collide with provided entity, false if not
+	***************************************************************************/
 	public boolean collidesWith(Entity other) 
 	{
 		me.setBounds((int) x,(int) y,sprite.getWidth(),sprite.getHeight());
@@ -197,12 +197,12 @@ public abstract class Entity
 	}
 	
 	
-	// =======================================================================
-	// collidedWith
-	// desc: 	notification that this entity collided with another.
-	// param: 	Entity other: the other entity with which this one collided
-	// ret:		true if we collide with provided entity, false if not
-	// =======================================================================
+	/***************************************************************************
+	* collidedWith
+	* desc: 	notification that this entity collided with another.
+	* @param: 	Entity other: the other entity with which this one collided
+	* @return:		true if we collide with provided entity, false if not
+	***************************************************************************/
 	public abstract void collidedWith(Entity other);
 	
 	

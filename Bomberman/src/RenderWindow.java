@@ -34,14 +34,14 @@ public class RenderWindow extends Canvas
 	// public
 	// #######################################################################
 	
-	// =======================================================================
-	// RenderWindow
-	// desc: 	initialises our render window with provided parameters and 
-	//			applies some common settings, we dont need to change
-	// param: 	String title: title for our rendering window
-	// 			int width: window width
-	//			int height: window height
-	// =======================================================================
+	/***************************************************************************
+	* RenderWindow
+	* desc: 	initialises our render window with provided parameters and 
+	*			applies some common settings, we dont need to change
+	* @param: 	String title: title for our rendering window
+	* 			int width: window width
+	*			int height: window height
+	***************************************************************************/
 	public RenderWindow(String title, int width, int height)
 	{
 		DebugConsole.Print("Init RenderWindow...");
@@ -105,12 +105,12 @@ public class RenderWindow extends Canvas
 	}
 
 	
-	// =======================================================================
-	// setCurrentScreen
-	// desc: 	set the current game screen, which has get rendered
-	// param: 	Gamescreen New_Screen: the screen, which has get rendered
-	// ret:		void
-	// =======================================================================
+	/***************************************************************************
+	* setCurrentScreen
+	* desc: 	set the current game screen, which has get rendered
+	* @param: 	Gamescreen New_Screen: the screen, which has get rendered
+	* @return:		void
+	***************************************************************************/
 	public void setCurrentScreen(Gamescreen New_Screen)	 
 	{
 		DebugConsole.Print("Setting new Gamescreen");
@@ -123,12 +123,12 @@ public class RenderWindow extends Canvas
 	}
 	
 	
-	// =======================================================================
-	// updateRenderWindow
-	// desc: 	updates our render window with our previously set game screen
-	// param: 	void
-	// ret:		void
-	// =======================================================================
+	/***************************************************************************
+	* updateRenderWindow
+	* desc: 	updates our render window with our previously set game screen
+	* @param: 	void
+	* @return:		void
+	***************************************************************************/
 	public void updateRenderWindow()
 	{
 		// Get hold of a graphics context for the accelerated 
