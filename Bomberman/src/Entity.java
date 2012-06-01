@@ -1,22 +1,18 @@
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
-
 /***************************************************************************
-* Entity
-* desc: 	an entity resembles an object in the game. it has its own 
-*			sprite/picture, its own radius for collision and few other
-*			attributes. its an abstract class, so for a special entity
-*			in your game, you have to create a separate class which
-*			extends all the attributes of this one and add a the 
-*			characteristic ones
-***************************************************************************/
-public abstract class Entity 
-{
+ * Entity desc: an entity resembles an object in the game. it has its own
+ * sprite/picture, its own radius for collision and few other attributes. its an
+ * abstract class, so for a special entity in your game, you have to create a
+ * separate class which extends all the attributes of this one and add a the
+ * characteristic ones
+ ***************************************************************************/
+public abstract class Entity {
 	// #######################################################################
 	// Variables
 	// #######################################################################
-	// the current x location of this entity 
+	// the current x location of this entity
 	protected double x;
 	// the current y location of this entity
 	protected double y;
@@ -30,186 +26,222 @@ public abstract class Entity
 	private Rectangle me = new Rectangle();
 	// the rectangle used for other entities during collision resolution
 	private Rectangle him = new Rectangle();
-	
+	// for animating the movement
+	// TODO: desc
+	private boolean is_moving_x = false;
+	private boolean is_moving_y = false;
+	private int cur_movement_blocks_x = 0;
+	private int cur_movement_blocks_y = 0;
+	private long cur_movement_speed_x = 0;
+	private long cur_movement_speed_y = 0;
+	private int cur_movement_counter_x = 0;
+	private int cur_movement_counter_y = 0;
+
 	// TODO: mabye?
 	// private String name = new String();
-	
-	
+
 	// #######################################################################
 	// Public functions
 	// #######################################################################
-	
+
 	/***************************************************************************
-	* Entity
-	* desc: 	construct a entity based on a sprite image and a location.
-	* @param: 	String sprite_name: name of the sprite loaded into our storage
-	*			int x: initial x cord of the entity
-	*			int y: initial y cord of the entity
-	***************************************************************************/
-	public Entity(String sprite_name, int x, int y) 
-	{
+	 * Entity desc: construct a entity based on a sprite image and a location.
+	 * 
+	 * @param: String sprite_name: name of the sprite loaded into our storage
+	 *         int x: initial x cord of the entity (tile based coordinate, *32)
+	 *         int y: initial y cord of the entity (tile based coordinate, *32)
+	 ***************************************************************************/
+	public Entity(String sprite_name, int tile_x, int tile_y) {
 		this.sprite = SpriteStorage.get().getSprite(sprite_name);
+		this.x = tile_x * 32;
+		this.y = tile_y * 32;
+	}
+
+	public void moveTileX(int blocks, long speed) {
+		if (this.is_moving_x == false) {
+			this.is_moving_x = true;
+			this.cur_movement_blocks_x = blocks;
+			this.cur_movement_speed_x = speed;
+			this.cur_movement_counter_x = (int) speed;
+		}
+	}
+
+	private void updateMovementX() {
+		if (this.is_moving_x == true) {
+			this.x = this.x + (this.cur_movement_blocks_x * 32)
+					/ (this.cur_movement_speed_x ^ 2);
+			this.cur_movement_counter_x--;
+
+			if (this.cur_movement_counter_x == 0)
+				this.is_moving_x = false;
+		}
+	}
+
+	public void moveTileY(int blocks, long speed) {
+		if (this.is_moving_y == false) {
+			this.is_moving_y = true;
+			this.cur_movement_blocks_y = blocks;
+			this.cur_movement_speed_y = speed;
+			this.cur_movement_counter_y = (int) speed;
+		}
+	}
+
+	private void updateMovementY() {
+		if (this.is_moving_y == true) {
+			this.y = this.y + (this.cur_movement_blocks_y * 32)
+					/ (this.cur_movement_speed_y ^ 2);
+			this.cur_movement_counter_y--;
+
+			if (this.cur_movement_counter_y == 0)
+				this.is_moving_y = false;
+		}
+	}
+
+	public void setTileX(int tile_x) {
+		if (this.is_moving_x == false)
+			this.x = tile_x * 32;
+	}
+
+	public void setTileY(int tile_y) {
+		if (this.is_moving_y == false)
+			this.y = tile_y * 32;
+	}
+
+	// TODO: javadoc
+
+	public void setX(int x) {
 		this.x = x;
+	}
+
+	public void setY(int y) {
 		this.y = y;
 	}
-	
-	
-	
-	public void setX(int x)
-	{
-		this.x = x;
-	}
-	
-	public void setY(int y)
-	{
-		this.y = y;
-	}
-	
-	
+
 	/***************************************************************************
-	* moveX
-	* desc: 	move the entity based on a certain amount of time passing
-	* @param: 	long delta: amount of time passed in milliseconds
-	* @return:		void
-	***************************************************************************/
-	public void moveX(long delta) 
-	{
+	 * moveX desc: move the entity based on a certain amount of time passing
+	 * 
+	 * @param: long delta: amount of time passed in milliseconds
+	 * @return: void
+	 ***************************************************************************/
+	public void moveX(long delta) {
 		// update the location of the entity based on move speeds
 		x += (delta * dx) / 1000;
 	}
-	
-	public void moveY(long delta) 
-	{
+
+	public void moveY(long delta) {
 		// update the location of the entity based on move speeds
 		y += (delta * dy) / 1000;
 	}
-	
-	
+
 	/***************************************************************************
-	* setHorizontalSpeedMovement
-	* desc: 	obvious
-	* @param: 	double dx: horizontal speed in (pixels/sec)
-	* @return:		void
-	***************************************************************************/ 
-	public void setHorizontalSpeedMovement(double dx) 
-	{
+	 * setHorizontalSpeedMovement desc: obvious
+	 * 
+	 * @param: double dx: horizontal speed in (pixels/sec)
+	 * @return: void
+	 ***************************************************************************/
+	public void setHorizontalSpeedMovement(double dx) {
 		this.dx = dx;
 	}
 
-	
 	/***************************************************************************
-	* setVerticalSpeedMovement
-	* desc: 	obvious
-	* @param: 	double dx: vertical speed in (pixels/sec)
-	* @return:		void
-	***************************************************************************/
-	public void setVerticalSpeedMovement(double dy) 
-	{
+	 * setVerticalSpeedMovement desc: obvious
+	 * 
+	 * @param: double dx: vertical speed in (pixels/sec)
+	 * @return: void
+	 ***************************************************************************/
+	public void setVerticalSpeedMovement(double dy) {
 		this.dy = dy;
 	}
-	
-	
+
 	/***************************************************************************
-	* getHorizontalSpeedMovement
-	* desc: 	obvious
-	* @param: 	void
-	* @return:		return horizontal speed in (pixels/sec)
-	***************************************************************************/
-	public double getHorizontalSpeedMovement() 
-	{
+	 * getHorizontalSpeedMovement desc: obvious
+	 * 
+	 * @param: void
+	 * @return: return horizontal speed in (pixels/sec)
+	 ***************************************************************************/
+	public double getHorizontalSpeedMovement() {
 		return dx;
 	}
 
-	
 	/***************************************************************************
-	* getVerticalSpeedMovement
-	* desc: 	obvious
-	* @param: 	void
-	* @return:		return vertical speed in (pixels/sec)
-	***************************************************************************/
-	public double getVerticalSpeedMovement() 
-	{
+	 * getVerticalSpeedMovement desc: obvious
+	 * 
+	 * @param: void
+	 * @return: return vertical speed in (pixels/sec)
+	 ***************************************************************************/
+	public double getVerticalSpeedMovement() {
 		return dy;
 	}
-	
-	
+
 	/***************************************************************************
-	* draw
-	* desc: 	draw entity to provided graphics context
-	* @param: 	Graphics graphics_context: the context to draw the entity to
-	* @return:		void
-	***************************************************************************/
+	 * draw desc: draw entity to provided graphics context
+	 * 
+	 * @param: Graphics graphics_context: the context to draw the entity to
+	 * @return: void
+	 ***************************************************************************/
 	public void draw(Graphics graphics_context) 
 	{
+		this.updateMovementX();
+		this.updateMovementY();
 		sprite.draw(graphics_context, (int) x, (int) y);
 	}
-	
-	
+
 	/*****************************************************************************
-	* doLogic
-	* desc: 	do the logic associated with this entity. this method
-	*			will be called periodically based on game events
-	* @param: 	void
-	* @return:		void
-	***************************************************************************/
-	public void doLogic() 
-	{
+	 * doLogic desc: do the logic associated with this entity. this method will
+	 * be called periodically based on game events
+	 * 
+	 * @param: void
+	 * @return: void
+	 ***************************************************************************/
+	public void doLogic() {
 		// nothing here
 	}
-	
-	
+
 	/***************************************************************************
-	* getLocationX
-	* desc: 	obvious
-	* @param: 	void
-	* @return:		return current x location
-	***************************************************************************/
-	public int getLocationX() 
-	{
+	 * getLocationX desc: obvious
+	 * 
+	 * @param: void
+	 * @return: return current x location
+	 ***************************************************************************/
+	public int getLocationX() {
 		return (int) x;
 	}
 
-	
 	/***************************************************************************
-	* getLocationY
-	* desc: 	obvious
-	* @param: 	void
-	* @return:		return current y location
-	***************************************************************************/
-	public int getLocationY() 
-	{
+	 * getLocationY desc: obvious
+	 * 
+	 * @param: void
+	 * @return: return current y location
+	 ***************************************************************************/
+	public int getLocationY() {
 		return (int) y;
 	}
-	
-	
+
 	/***************************************************************************
-	* collidesWith
-	* desc: 	check if this entity collides with another
-	* @param: 	Entity other: the other entity to check the collision against
-	* @return:		true if we collide with provided entity, false if not
-	***************************************************************************/
-	public boolean collidesWith(Entity other) 
-	{
-		me.setBounds((int) x,(int) y,sprite.getWidth(),sprite.getHeight());
-		him.setBounds((int) other.x,(int) other.y,other.sprite.getWidth(),other.sprite.getHeight());
+	 * collidesWith desc: check if this entity collides with another
+	 * 
+	 * @param: Entity other: the other entity to check the collision against
+	 * @return: true if we collide with provided entity, false if not
+	 ***************************************************************************/
+	public boolean collidesWith(Entity other) {
+		me.setBounds((int) x, (int) y, sprite.getWidth(), sprite.getHeight());
+		him.setBounds((int) other.x, (int) other.y, other.sprite.getWidth(),
+				other.sprite.getHeight());
 
 		return me.intersects(him);
 	}
-	
-	
+
 	/***************************************************************************
-	* collidedWith
-	* desc: 	notification that this entity collided with another.
-	* @param: 	Entity other: the other entity with which this one collided
-	* @return:		true if we collide with provided entity, false if not
-	***************************************************************************/
+	 * collidedWith desc: notification that this entity collided with another.
+	 * 
+	 * @param: Entity other: the other entity with which this one collided
+	 * @return: true if we collide with provided entity, false if not
+	 ***************************************************************************/
 	public abstract void collidedWith(Entity other);
-	
-	
-	
+
 	// #######################################################################
 	// Private functions
 	// #######################################################################
-	
+
 	// nothing here
 }

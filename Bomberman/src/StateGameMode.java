@@ -27,10 +27,10 @@ public class StateGameMode implements InterfaceState
 		KeyboardInput.init(1);
 		
 		// TODO Auto-generated method stub
-		this.spielfeld=  new Spielfeld();
-		spielfeld.addEntitiesToScreen(this.Cur_Gamescreen);
+		//this.spielfeld =  new Spielfeld();
+		//spielfeld.addEntitiesToScreen(this.Cur_Gamescreen);
 		
-		//this.Cur_Gamescreen.addEntityToScreen("E1", new ExampleEntity("Bomberman", 0, 0));
+		this.Cur_Gamescreen.addEntityToScreen("bomberman0", new ExampleEntity("Bomberman", 0, 0));
 		
 		this.Cur_Gamescreen.getEntity("bomberman0").setHorizontalSpeedMovement(5);
 		this.Cur_Gamescreen.getEntity("bomberman0").setVerticalSpeedMovement(5);
@@ -49,15 +49,17 @@ public class StateGameMode implements InterfaceState
 		// TODO: draft not working
 		if (KeyboardInput.getActionState(0, KeyboardInput.ACTION.MOVE_UP) == true)
 		{
-			this.Cur_Gamescreen.getEntity("bomberman0").moveY(50 * elapsed_time);
+			this.Cur_Gamescreen.getEntity("bomberman0").moveTileY(1, 0);
 		}
 			
 		if (KeyboardInput.getActionState(0, KeyboardInput.ACTION.MOVE_DOWN) == true)
-			this.Cur_Gamescreen.getEntity("bomberman0").moveY(-50 * elapsed_time);
+			this.Cur_Gamescreen.getEntity("bomberman0").moveTileY(-1, 0);
 		if (KeyboardInput.getActionState(0, KeyboardInput.ACTION.MOVE_LEFT) == true)
-			this.Cur_Gamescreen.getEntity("bomberman0").moveX(-50 * elapsed_time);
+			this.Cur_Gamescreen.getEntity("bomberman0").moveTileX(-1, 0);
 		if (KeyboardInput.getActionState(0, KeyboardInput.ACTION.MOVE_RIGHT) == true)
 		{
+			this.Cur_Gamescreen.getEntity("bomberman0").moveTileX(1, 0);
+			/*
 			int old_cord = this.Cur_Gamescreen.getEntity("bomberman0").getLocationX();
 			this.Cur_Gamescreen.getEntity("bomberman0").moveX(50 * elapsed_time);
 			int new_cord = this.Cur_Gamescreen.getEntity("bomberman0").getLocationX();
@@ -68,6 +70,7 @@ public class StateGameMode implements InterfaceState
 				this.Cur_Gamescreen.getEntity("bomberman0").setX(old_cord);
 				System.out.println("ccc");
 			}
+			*/
 		}
 			
 		

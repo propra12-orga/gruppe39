@@ -4,7 +4,7 @@ import java.util.Vector;
 
 public class Spielfeld 
 {
-	// hoechstwahrscheinlich werden wir kein STATE fï¿½r Spielfeld brauchen
+	// hoechstwahrscheinlich werden wir kein STATE fŸr Spielfeld brauchen
 	public static enum STATE
 	{
 		NO_STATE,
@@ -16,8 +16,8 @@ public class Spielfeld
 	private STATE state = STATE.NO_STATE;
 	
 	/*
-	 * Ein Kï¿½stchen ist 32p breit und 32p hoch . 
-	 * => hat das Spielfeld insgesamt 15*13 Kï¿½stchen
+	 * Ein KŠstchen ist 32p breit und 32p hoch . 
+	 * => hat das Spielfeld insgesamt 15*13 KŠstchen
 	 */
 	private final Entity[][] spielfeld = new Entity[15][13];
 	
@@ -51,7 +51,7 @@ public class Spielfeld
 	{
 		e = new BombermanEntity("Bomberman", 0, 0);
 		bomberman_entities.add((BombermanEntity) e);
-		this.spielfeld[0][0] = e;
+		this.spielfeld[0][0];
 	}
 	
 	private void makeBreakable()
@@ -97,8 +97,7 @@ public class Spielfeld
 	public void addBomb(int x, int y)
 	{
 		// TODO: bombe legen + status setzen + ticken lassen etc.
-		// bombe erzeugen...
-		//bombe_entities.add(bomb);
+		bombe_entities.add(bomb);
 	}
 	
 	public void addExplosion(ExplosionEntity expl)
@@ -112,11 +111,11 @@ public class Spielfeld
 		if (entity instanceof BombermanEntity)
 		{
 			// es gibt nur einen Bomberman
-			bomberman_entities.remove(entity);
+			bomberman_entities.clear();
 		}
 		else if (entity instanceof ExplosionEntity)
 		{
-			// man braucht also nur einen der Explosionen weg zu machen und alle anderen werden mitgelï¿½scht.
+			// man braucht also nur einen der Explosionen weg zu machen und alle anderen werden mitgelšscht.
 			explosion_entities.clear();
 		}
 		else if (entity instanceof BreakableEntity)
@@ -138,9 +137,6 @@ public class Spielfeld
 	
     public Entity getEntity(int x, int y)
     {
-    	// TODO:
-    	// abfrage ob x und y auÃŸerhalb vom spielfeld -> error
-    	// return this.spielfeld[x][y]
     	int i;
     	// wenn entity unbreakable
     	if  ( ( ( (x/32) % 2 ) == 1 )  && ( ( (y/32) % 2 ) == 1 ) )
@@ -157,7 +153,7 @@ public class Spielfeld
     	for (i=0; i < this.bomberman_entities.size(); i++)	
     		if ( (this.bomberman_entities.get(0).getLocationX() == x) && (this.bomberman_entities.get(0).getLocationY() == y) )
     			return this.bomberman_entities.get(0);
-    		// es gibt auch nur einen bomb ; spï¿½ter vielleicht mit mehreren bombermen
+    		// es gibt auch nur einen bomb ; spŠter vielleicht mit mehreren bombermen
     	 for (i=0; i<this.bombe_entities.size(); i++)
     		 if ( (this.bombe_entities.get(0).getLocationX() == x) && (this.bombe_entities.get(0).getLocationY() == y) )
     			return this.bombe_entities.get(0);
