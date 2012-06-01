@@ -186,7 +186,6 @@ public class KeyboardInput extends KeyAdapter
 		{
 			KeyboardInput.action[player][a.ordinal()][0] = false;
 			KeyboardInput.action[player][a.ordinal()][1] = false;
-			System.out.println("action");
 			return true;
 		}
 		else 
@@ -215,7 +214,6 @@ public class KeyboardInput extends KeyAdapter
 			{
 				if (e.getKeyCode() == KeyboardInput.Keycode_Config[i][j])
 				{
-					System.out.println("pressed");
 					KeyboardInput.action[i][j][0] = true;
 					// FIXME: insert this to have single key presses AND releases (types) only
 					//KeyboardInput.action[i][j][1] = false;
@@ -246,7 +244,6 @@ public class KeyboardInput extends KeyAdapter
 			{
 				if (e.getKeyCode() == KeyboardInput.Keycode_Config[i][j])
 				{
-					System.out.println("released");
 					KeyboardInput.action[i][j][1] = true;
 				}
 				else

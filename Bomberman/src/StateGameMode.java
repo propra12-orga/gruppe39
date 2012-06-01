@@ -1,3 +1,5 @@
+import java.awt.Graphics2D;
+
 
 /*********************************************************************
 * StateGameMode
@@ -17,7 +19,8 @@ public class StateGameMode implements InterfaceState
 		this.Cur_Gamescreen = Cur_Screen;
 	}
 	
-	private Spielfeld spielfeld;
+	//private Spielfeld spielfeld;
+	private final Spielfeld spielfeld  =  new Spielfeld();
 
 
 	@Override
@@ -27,14 +30,7 @@ public class StateGameMode implements InterfaceState
 		KeyboardInput.init(1);
 		
 		// TODO Auto-generated method stub
-		this.spielfeld =  new Spielfeld();
-		spielfeld.addEntitiesToScreen(this.Cur_Gamescreen);
-		
-		//this.Cur_Gamescreen.addEntityToScreen("bomberman0", new ExampleEntity("Bomberman", 0, 0));
-		
-		//this.Cur_Gamescreen.getEntity("bomberman0").setHorizontalSpeedMovement(5);
-		//this.Cur_Gamescreen.getEntity("bomberman0").setVerticalSpeedMovement(5);
-	
+		spielfeld.addEntitiesToScreen(this.Cur_Gamescreen);	
 	}
 
 	@Override
@@ -45,35 +41,62 @@ public class StateGameMode implements InterfaceState
 		// - kollisionsabfrage und neue position(en) berechnen, evtl. zustandsabfrage
 		// - zustandsabfrage und verarbeitung der zustaende der entities
 
-		
+	
 		// TODO: draft not working
 		if (KeyboardInput.getActionState(0, KeyboardInput.ACTION.MOVE_UP) == true)
 		{
-			this.Cur_Gamescreen.getEntity("bomberman0").moveTileY(1, 0);
+			BombermanEntity bomberman = (BombermanEntity) this.Cur_Gamescreen.getEntity("bomberman0");
+			
+			if (bomberman.isMoving() == false)
+			{
+				if (this.spielfeld.spielfeld[bomberman.getTileX()][bomberman.getTileY() + 1] == null)
+				{
+					this.Cur_Gamescreen.getEntity("bomberman0").moveTileY(1, 3);
+				}
+			}
 		}
 			
 		if (KeyboardInput.getActionState(0, KeyboardInput.ACTION.MOVE_DOWN) == true)
-			this.Cur_Gamescreen.getEntity("bomberman0").moveTileY(-1, 0);
-		if (KeyboardInput.getActionState(0, KeyboardInput.ACTION.MOVE_LEFT) == true)
-			this.Cur_Gamescreen.getEntity("bomberman0").moveTileX(-1, 1);
-		if (KeyboardInput.getActionState(0, KeyboardInput.ACTION.MOVE_RIGHT) == true)
 		{
-			this.Cur_Gamescreen.getEntity("bomberman0").moveTileX(1, 1);
-			/*
-			int old_cord = this.Cur_Gamescreen.getEntity("bomberman0").getLocationX();
-			this.Cur_Gamescreen.getEntity("bomberman0").moveX(50 * elapsed_time);
-			int new_cord = this.Cur_Gamescreen.getEntity("bomberman0").getLocationX();
+			BombermanEntity bomberman = (BombermanEntity) this.Cur_Gamescreen.getEntity("bomberman0");
 			
-			if (this.Cur_Gamescreen.getEntity("bomberman0").collidesWith(spielfeld.getEntity(new_cord, 
-					(this.Cur_Gamescreen.getEntity("bomberman0").getLocationY()))))
+			if (bomberman.isMoving() == false)
 			{
-				this.Cur_Gamescreen.getEntity("bomberman0").setX(old_cord);
-				System.out.println("ccc");
+				if (this.spielfeld.spielfeld[bomberman.getTileX()][bomberman.getTileY() - 1] == null)
+				{
+					this.Cur_Gamescreen.getEntity("bomberman0").moveTileY(-1, 3);
+				}
 			}
-			*/
+		}
+		if (KeyboardInput.getActionState(0, KeyboardInput.ACTION.MOVE_LEFT) == true)
+		{
+			BombermanEntity bomberman = (BombermanEntity) this.Cur_Gamescreen.getEntity("bomberman0");
+			
+			if (bomberman.isMoving() == false)
+			{
+				if (this.spielfeld.spielfeld[bomberman.getTileX() - 1][bomberman.getTileY()] == null)
+				{
+					this.Cur_Gamescreen.getEntity("bomberman0").moveTileX(-1, 3);
+				}
+			}
 		}
 			
+		if (KeyboardInput.getActionState(0, KeyboardInput.ACTION.MOVE_RIGHT) == true)
+		{
+			BombermanEntity bomberman = (BombermanEntity) this.Cur_Gamescreen.getEntity("bomberman0");
+			
+			if (bomberman.isMoving() == false)
+			{
+				if (this.spielfeld.spielfeld[bomberman.getTileX() + 1][bomberman.getTileY()] == null)
+				{
+					this.Cur_Gamescreen.getEntity("bomberman0").moveTileX(1, 3);
+				}
+			}
+			
+		}
 		
+			
+
 		// kollisionsabfrage
 		
 	}

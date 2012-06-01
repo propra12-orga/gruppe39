@@ -51,10 +51,11 @@ public abstract class Entity {
 	 *         int x: initial x cord of the entity (tile based coordinate, *32)
 	 *         int y: initial y cord of the entity (tile based coordinate, *32)
 	 ***************************************************************************/
-	public Entity(String sprite_name, int tile_x, int tile_y) {
+	public Entity(String sprite_name, int x, int y) 
+	{
 		this.sprite = SpriteStorage.get().getSprite(sprite_name);
-		this.x = tile_x * 32;
-		this.y = tile_y * 32;
+		this.x = x;
+		this.y = y;
 	}
 
 	public void moveTileX(int blocks, long speed) 
@@ -82,7 +83,7 @@ public abstract class Entity {
 		}
 	}
 
-	private void updateMovementX() 
+	private void updateTileMovementX() 
 	{
 		if (this.is_moving_x == true) 
 		{
@@ -120,7 +121,7 @@ public abstract class Entity {
 		}
 	}
 
-	private void updateMovementY() 
+	private void updateTileMovementY() 
 	{
 		if (this.is_moving_y == true) 
 		{
@@ -141,6 +142,24 @@ public abstract class Entity {
 	public void setTileY(int tile_y) {
 		if (this.is_moving_y == false)
 			this.y = tile_y * 32;
+	}
+	
+	public int getTileX()
+	{
+			return ((int) this.x / 32);		
+	}
+	
+	public int getTileY()
+	{
+			return ((int) this.y / 32);		
+	}
+	
+	public boolean isMoving()
+	{
+		if (this.is_moving_x == true || this.is_moving_y == true)
+			return true;
+		else
+			return false;
 	}
 
 	// TODO: javadoc
@@ -217,9 +236,9 @@ public abstract class Entity {
 	 ***************************************************************************/
 	public void draw(Graphics graphics_context) 
 	{
-		this.updateMovementX();
-		this.updateMovementY();
-		sprite.draw(graphics_context, (int) x, (int) y);
+		this.updateTileMovementX();
+		this.updateTileMovementY();
+		sprite.draw(graphics_context, (int) this.x, (int) this.y);
 	}
 
 	/*****************************************************************************

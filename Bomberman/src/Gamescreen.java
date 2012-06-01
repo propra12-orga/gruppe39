@@ -92,7 +92,7 @@ public class Gamescreen
 			}
 			
 			// valid element, add to list
-			this.Entity_List.put(Name_Entity[i], E[i]);		
+			this.Entity_List.put(Name_Entity[i], E[i]);
 		}
 	}
 	
@@ -135,7 +135,7 @@ public class Gamescreen
 	public Entity[] getAllEntites()
 	{
 		// get all the entities from the hashmap and put them into a handy array
-		Entity[] array = new Entity[1];
+		Entity[] array = new Entity[this.Entity_List.size()];
 		array = this.Entity_List.values().toArray(array);
 		
 		return array;

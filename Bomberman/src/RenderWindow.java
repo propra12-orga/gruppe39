@@ -21,7 +21,7 @@ public class RenderWindow extends Canvas
 	// holds our current screen we have to render to our window
 	private Gamescreen Current_Screen;
 	// used to manage accelerated graphics
-	private BufferStrategy Buffer_Strategy;
+	public static BufferStrategy Buffer_Strategy;
 	
 	// our window width (obviously)
 	private int window_width;

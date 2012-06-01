@@ -19,9 +19,8 @@ public class Spielfeld
 	 * Ein K�stchen ist 32p breit und 32p hoch . 
 	 * => hat das Spielfeld insgesamt 15*13 K�stchen
 	 */
-	private final Entity[][] spielfeld = new Entity[15][13];
+	public final Entity[][] spielfeld = new Entity[15][13];
 	
-	Entity e;
 	
 	
 	// spielfeld inhalt ::: 
@@ -34,7 +33,30 @@ public class Spielfeld
 	
 	private void fillUnbreakable()
 	{
-		int i, j;
+		// ring of unbreakables
+		for (int i = 0; i < 15; i++)
+		{
+			Entity e = new UnbreakableEntity("Tile_UnBreakable",i * 32, 0);
+			unbreakable_entities.add((UnbreakableEntity) e);	// vector
+			this.spielfeld[i][0] = e;
+			
+			Entity e2 = new UnbreakableEntity("Tile_UnBreakable",i * 32, 32 * 12);
+			unbreakable_entities.add((UnbreakableEntity) e2);	// vector
+			this.spielfeld[i][12] = e2;
+		}
+		
+		for (int i = 1; i < 13; i++)
+		{
+			Entity e = new UnbreakableEntity("Tile_UnBreakable", 0, 32 * i);
+			unbreakable_entities.add((UnbreakableEntity) e);	// vector
+			this.spielfeld[0][i] = e;
+			
+			Entity e2 = new UnbreakableEntity("Tile_UnBreakable", 32 * 14, 32 * i);
+			unbreakable_entities.add((UnbreakableEntity) e2);	// vector
+			this.spielfeld[14][i] = e2;
+		}
+		
+	/*	
 		for (i =1 ; i<15; i+=2)
 		{
 			for (j=1; j<13; j+=2)
@@ -45,11 +67,12 @@ public class Spielfeld
 				
 			}
 		}
+		*/
 	}
 	
 	private void makeBomberman()
 	{
-		e = new BombermanEntity("Bomberman", 0, 0);
+		Entity e = new BombermanEntity("Bomberman", 32 * 1, 32 * 1);
 		bomberman_entities.add((BombermanEntity) e);
 		this.spielfeld[0][0] = e;
 	}
@@ -62,7 +85,7 @@ public class Spielfeld
 	    {	
 			for (j=0; j<13; j+=2)
 	    	{
-				e = new BreakableEntity("Tile_Breakable", i*32, j*32);
+				Entity e = new BreakableEntity("Tile_Breakable", i*32, j*32);
 				breakable_entities.add((BreakableEntity) e);
 				this.spielfeld[i][j] = e;
 	       }
@@ -74,7 +97,7 @@ public class Spielfeld
 	{
 		fillUnbreakable();
 		makeBomberman();
-		makeBreakable();
+		//makeBreakable();
 	}
 	
 	public void addEntitiesToScreen(Gamescreen cur_gamescreen)
