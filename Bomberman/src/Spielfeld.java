@@ -39,7 +39,7 @@ public class Spielfeld
 		{
 			for (j=1; j<13; j+=2)
 			{
-				e = new UnbreakableEntity("Tile_Unbreakable",i*32, j*32);
+				e = new UnbreakableEntity("Tile_UnBreakable",i*32, j*32);
 				unbreakable_entities.add((UnbreakableEntity) e);	// vector
 				this.spielfeld[i][j] = e;
 				
@@ -56,7 +56,7 @@ public class Spielfeld
 	
 	private void makeBreakable()
 	{
-/*   
+
 		int i,j;
 	    for (i=0; i<15; i+=2)
 	    {	
@@ -64,17 +64,17 @@ public class Spielfeld
 	    	{
 				e = new BreakableEntity("Tile_Breakable", i*32, j*32);
 				breakable_entities.add((BreakableEntity) e);
-				this.spielfeld[i][j];
+				this.spielfeld[i][j] = e;
 	       }
 	    } 	
-*/
+
 	}    
 	
 	public Spielfeld()
 	{
 		fillUnbreakable();
 		makeBomberman();
-		//makeBreakable();
+		makeBreakable();
 	}
 	
 	public void addEntitiesToScreen(Gamescreen cur_gamescreen)
@@ -82,6 +82,11 @@ public class Spielfeld
 		for (int i = 0; i < this.unbreakable_entities.size(); i++)
 		{
 			cur_gamescreen.addEntityToScreen("unbreakable" + i, this.unbreakable_entities.get(i));
+		}
+		
+		for (int i = 0; i < this.breakable_entities.size(); i++)
+		{
+			cur_gamescreen.addEntityToScreen("breakable" + i, this.breakable_entities.get(i));
 		}
 		
 		for (int i = 0; i < this.bomberman_entities.size(); i++)

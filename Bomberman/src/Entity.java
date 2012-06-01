@@ -57,41 +57,77 @@ public abstract class Entity {
 		this.y = tile_y * 32;
 	}
 
-	public void moveTileX(int blocks, long speed) {
-		if (this.is_moving_x == false) {
+	public void moveTileX(int blocks, long speed) 
+	{
+		if (this.is_moving_x == false) 
+		{
 			this.is_moving_x = true;
 			this.cur_movement_blocks_x = blocks;
-			this.cur_movement_speed_x = speed;
-			this.cur_movement_counter_x = (int) speed;
+			
+			if (speed > 6)
+			{
+				this.cur_movement_speed_x = 5;
+				this.cur_movement_counter_x = Math.abs(blocks);
+			}
+			else if (speed < 1)
+			{
+				this.cur_movement_speed_x = 0;
+				this.cur_movement_counter_x = Math.abs(32 * blocks);
+			}
+			else
+			{
+				this.cur_movement_speed_x = speed - 1;
+				this.cur_movement_counter_x = Math.abs((32 * blocks) / (int) Math.pow(2, speed - 1));
+			}
 		}
 	}
 
-	private void updateMovementX() {
-		if (this.is_moving_x == true) {
-			this.x = this.x + (this.cur_movement_blocks_x * 32)
-					/ (this.cur_movement_speed_x ^ 2);
+	private void updateMovementX() 
+	{
+		if (this.is_moving_x == true) 
+		{
+			this.x = this.x + 32 / ((this.cur_movement_blocks_x * 32)
+					/ (int) Math.pow(2, this.cur_movement_speed_x));
+			
 			this.cur_movement_counter_x--;
-
 			if (this.cur_movement_counter_x == 0)
 				this.is_moving_x = false;
 		}
 	}
 
-	public void moveTileY(int blocks, long speed) {
-		if (this.is_moving_y == false) {
+	public void moveTileY(int blocks, long speed) 
+	{
+		if (this.is_moving_y == false) 
+		{
 			this.is_moving_y = true;
 			this.cur_movement_blocks_y = blocks;
-			this.cur_movement_speed_y = speed;
-			this.cur_movement_counter_y = (int) speed;
+			
+			if (speed > 6)
+			{
+				this.cur_movement_speed_y = 5;
+				this.cur_movement_counter_y = Math.abs(blocks);
+			}
+			else if (speed < 1)
+			{
+				this.cur_movement_speed_y = 0;
+				this.cur_movement_counter_y = Math.abs(32 * blocks);
+			}
+			else
+			{
+				this.cur_movement_speed_y = speed - 1;
+				this.cur_movement_counter_y = Math.abs((32 * blocks) / (int) Math.pow(2, speed - 1));
+			}
 		}
 	}
 
-	private void updateMovementY() {
-		if (this.is_moving_y == true) {
-			this.y = this.y + (this.cur_movement_blocks_y * 32)
-					/ (this.cur_movement_speed_y ^ 2);
+	private void updateMovementY() 
+	{
+		if (this.is_moving_y == true) 
+		{
+			this.y = this.y + 32 / ((this.cur_movement_blocks_y * 32)
+					/ (int) Math.pow(2, this.cur_movement_speed_y));
+			
 			this.cur_movement_counter_y--;
-
 			if (this.cur_movement_counter_y == 0)
 				this.is_moving_y = false;
 		}

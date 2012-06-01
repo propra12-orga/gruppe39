@@ -33,7 +33,7 @@ public class KeyboardInput extends KeyAdapter
 	// array holding our keyboard configuration for each player
 	private static int[][] Keycode_Config;
 	// array holding our action states for each player
-	private static boolean[][] action;
+	private static boolean[][][] action;
 	
 	
 	
@@ -63,7 +63,8 @@ public class KeyboardInput extends KeyAdapter
 		
 		// create as many arrays as players we have
 		KeyboardInput.Keycode_Config = new int[KeyboardInput.number_players][KeyboardInput.NUMBER_ACTIONS];
-		KeyboardInput.action = new boolean[KeyboardInput.number_players][KeyboardInput.NUMBER_ACTIONS];
+		KeyboardInput.action = new boolean[KeyboardInput.number_players][KeyboardInput.NUMBER_ACTIONS][2];
+
 		
 		// init all actions as false and set default keyconfig for player 1 and none
 		// for all other players (to prevent errors)
@@ -75,7 +76,8 @@ public class KeyboardInput extends KeyAdapter
 			
 			for (int j = 0; j < KeyboardInput.NUMBER_ACTIONS; j++)
 			{
-				KeyboardInput.action[i][j] = false;
+				KeyboardInput.action[i][j][0] = false;
+				KeyboardInput.action[i][j][1] = false;
 			}
 		}
 	}
@@ -180,8 +182,15 @@ public class KeyboardInput extends KeyAdapter
 			return false;
 		}
 		
-		// @return our current state of action
-		return KeyboardInput.action[player][a.ordinal()];
+		if (KeyboardInput.action[player][a.ordinal()][0] == true && KeyboardInput.action[player][a.ordinal()][1] == true)
+		{
+			KeyboardInput.action[player][a.ordinal()][0] = false;
+			KeyboardInput.action[player][a.ordinal()][1] = false;
+			System.out.println("action");
+			return true;
+		}
+		else 
+			return false;
 	}
 	
 	
@@ -205,7 +214,14 @@ public class KeyboardInput extends KeyAdapter
 			for (int j = 0; j < KeyboardInput.NUMBER_ACTIONS; j++)
 			{
 				if (e.getKeyCode() == KeyboardInput.Keycode_Config[i][j])
-					KeyboardInput.action[i][j] = true;
+				{
+					System.out.println("pressed");
+					KeyboardInput.action[i][j][0] = true;
+					// FIXME: insert this to have single key presses AND releases (types) only
+					//KeyboardInput.action[i][j][1] = false;
+				}
+				else
+					KeyboardInput.action[i][j][0] = false;
 			}
 		}
 	}
@@ -229,7 +245,12 @@ public class KeyboardInput extends KeyAdapter
 			for (int j = 0; j < KeyboardInput.NUMBER_ACTIONS; j++)
 			{
 				if (e.getKeyCode() == KeyboardInput.Keycode_Config[i][j])
-					KeyboardInput.action[i][j] = false;
+				{
+					System.out.println("released");
+					KeyboardInput.action[i][j][1] = true;
+				}
+				else
+					KeyboardInput.action[i][j][1] = false;
 			}
 		}
 	}
@@ -243,7 +264,21 @@ public class KeyboardInput extends KeyAdapter
 	* @return:		void
 	***************************************************************************/
 	public void keyTyped(KeyEvent e) 
-	{
+	{/*
+		System.out.println("key typed: " + e.toString());
+		
+		// loop through all players we have
+		for (int i = 0; i < KeyboardInput.number_players; i++)
+		{
+			for (int j = 0; j < KeyboardInput.NUMBER_ACTIONS; j++)
+			{
+				if (e.getKeyCode() == KeyboardInput.Keycode_Config[i][j])
+				{
+					KeyboardInput.action[i][j] = true;
+				}
+			}
+		}
+*/
 		// TODO: ?
 		/*
 
