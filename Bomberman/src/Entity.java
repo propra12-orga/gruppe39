@@ -57,6 +57,11 @@ public abstract class Entity {
 		this.x = x;
 		this.y = y;
 	}
+	
+	public void setSprite(String sprite_name)
+	{
+		this.sprite = SpriteStorage.get().getSprite(sprite_name);
+	}
 
 	public void moveTileX(int blocks, long speed) 
 	{

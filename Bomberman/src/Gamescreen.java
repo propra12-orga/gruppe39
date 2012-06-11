@@ -1,5 +1,6 @@
 import java.awt.Graphics;
 import java.util.HashMap;
+import java.util.Vector;
 
 
 /***********************************************************************
@@ -15,7 +16,7 @@ public class Gamescreen
 	// Variables
 	// #######################################################################
 	// "list" containing all entities for that particular screen
-	private HashMap<String, Entity> Entity_List;
+	private Vector<Entity> Entity_List;
 
 	
 	
@@ -31,7 +32,7 @@ public class Gamescreen
 	public Gamescreen()
 	{		
 		// create our entity "list"
-		this.Entity_List = new HashMap<String, Entity>();
+		this.Entity_List = new Vector<Entity>();
 	}
 	
 	
@@ -42,17 +43,17 @@ public class Gamescreen
 	* 			Entity E: our entity we want to add
 	* @return:		void
 	**************************************************************************/ 
-	public void addEntityToScreen(String Name_Entity, Entity E)
+	public void addEntityToScreen(Entity E)
 	{
 		// error check
-		if (Name_Entity == null || E == null)
+		if (E == null)
 		{
 			DebugConsole.PrintError("Invalid(null) Name_Entity or Entity");
 			return;
 		}
 			
 		// valid element, add entity to list
-		this.Entity_List.put(Name_Entity, E);
+		this.Entity_List.add(E);
 	}
 	
 	
@@ -64,8 +65,8 @@ public class Gamescreen
 	* 			Entity[] E: list with entities (same length as Name_Entity!)
 	* @return: 	void
 	*****************************************************************************/ 
-
-	public void addEntitiesToScreen(String[] Name_Entity, Entity[] E)
+/*
+	public void addEntitiesToScreen(Entity[] E)
 	{
 		// error check
 		if (Name_Entity == null || E == null)
@@ -95,11 +96,13 @@ public class Gamescreen
 			this.Entity_List.put(Name_Entity[i], E[i]);
 		}
 	}
+	*/
 	
-	// TODO TODO
-	public void removeEntityFromScreen(String name)
+
+	
+	public void removeEntityFromScreen(Entity e)
 	{
-		this.Entity_List.remove(name);
+		this.Entity_List.remove(e);
 	}
 	
 	
@@ -109,6 +112,7 @@ public class Gamescreen
 	* @param: 	String Name_Entity: name of the entity we want to have
 	* return: 	returns the entity if its in our list, else null
 	***************************************************************************/
+/*
 	public Entity getEntity(String Name_Entity)
 	{
 		// error checks
@@ -124,6 +128,15 @@ public class Gamescreen
 		else
 			return this.Entity_List.get(Name_Entity);
 	}
+	*/
+	
+	public boolean isEntityOnScreen(Entity e)
+	{
+		if (this.Entity_List.contains(e))
+			return true;
+		else
+			return false;
+	}
 	
 	
 	// =======================================================================
@@ -132,6 +145,7 @@ public class Gamescreen
 	// param:	void
 	// ret:		array containing all entities of our private list
 	// =======================================================================
+/*
 	public Entity[] getAllEntites()
 	{
 		// get all the entities from the hashmap and put them into a handy array
@@ -140,7 +154,7 @@ public class Gamescreen
 		
 		return array;
 	}
-	
+	*/
 	
 	/**************************************************************************
 	* drawEntitesToScreen
@@ -157,13 +171,10 @@ public class Gamescreen
 			return;
 		}
 		
-		// get all our entities
-		Entity[] Entities = this.getAllEntites();
-		
 		// draw them
-		for (int i = 0; i < Entities.length; i++)
+		for (int i = 0; i < this.Entity_List.size(); i++)
 		{
-			Entities[i].draw(Graphics_Context);
+			this.Entity_List.get(i).draw(Graphics_Context);
 		}
 	}
 	

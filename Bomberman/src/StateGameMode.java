@@ -33,6 +33,9 @@ public class StateGameMode implements InterfaceState
 	//private Spielfeld spielfeld;
 	public final Entity[][] spielfeld = new Entity[15][13];
 
+	
+	// TODO: remove, only for testing
+	private BombermanEntity bomberman;
 
 	@Override
 	public void init() 
@@ -45,28 +48,29 @@ public class StateGameMode implements InterfaceState
 		{
 			Entity e = new UnbreakableEntity("Tile_UnBreakable",i * 32, 0);
 			this.spielfeld[i][0] = e;
-			this.Cur_Gamescreen.addEntityToScreen("unbreak" + i, e);
+			this.Cur_Gamescreen.addEntityToScreen(e);
 					
 			Entity e2 = new UnbreakableEntity("Tile_UnBreakable",i * 32, 32 * 12);
 			this.spielfeld[i][12] = e2;
-			this.Cur_Gamescreen.addEntityToScreen("unbreak" + i + 15, e2);
+			this.Cur_Gamescreen.addEntityToScreen(e2);
 		}
 				
 		for (int i = 1; i < 13; i++)
 		{
 			Entity e = new UnbreakableEntity("Tile_UnBreakable", 0, 32 * i);
-			this.Cur_Gamescreen.addEntityToScreen("unbreak" + 30 + i, e);
+			this.Cur_Gamescreen.addEntityToScreen(e);
 			this.spielfeld[0][i] = e;
 					
 			Entity e2 = new UnbreakableEntity("Tile_UnBreakable", 32 * 14, 32 * i);
-			this.Cur_Gamescreen.addEntityToScreen("unbreak" + 30 + i + 13, e2);
+			this.Cur_Gamescreen.addEntityToScreen(e2);
 			this.spielfeld[14][i] = e2;
 		}
 		
 		// bomberman
 		Entity e = new BombermanEntity("Bomberman", 32 * 1, 32 * 1);
-		this.Cur_Gamescreen.addEntityToScreen("bomberman0", e);
+		this.Cur_Gamescreen.addEntityToScreen(e);
 		this.spielfeld[1][1] = e;
+		this.bomberman = (BombermanEntity) e;
 		
 	}
 
@@ -79,62 +83,74 @@ public class StateGameMode implements InterfaceState
 		// - zustandsabfrage und verarbeitung der zustaende der entities
 
 	
-		// TODO: draft not working
-		if (KeyboardInput.getActionState(0, KeyboardInput.ACTION.MOVE_UP) == true)
+		// TODO: abfrage, ob bomberman figuren noch am leben sind und entsprechendes machen			
+		
+		// statt dead abfrage, abfrage ob entity aus spielfeld null ist
+		if (this.bomberman.getState() == BombermanEntity.STATE.DEAD)
 		{
-			BombermanEntity bomberman = (BombermanEntity) this.Cur_Gamescreen.getEntity("bomberman0");
-			
+			// TODO
+			return;
+		}
+		
+		if (KeyboardInput.getActionState(0, KeyboardInput.ACTION.MOVE_UP) == true)
+		{			
 			if (bomberman.isMoving() == false)
 			{
-				if (this.spielfeld[bomberman.getTileX()][bomberman.getTileY() + 1] == null)
+				synchronized (this.spielfeld)
 				{
-					this.spielfeld[bomberman.getTileX()][bomberman.getTileY() + 1] = this.spielfeld[bomberman.getTileX()][bomberman.getTileY()];
-					this.spielfeld[bomberman.getTileX()][bomberman.getTileY()] = null;
-					this.Cur_Gamescreen.getEntity("bomberman0").moveTileY(1, 3);
+					if (this.spielfeld[bomberman.getTileX()][bomberman.getTileY() + 1] == null)
+					{
+						this.spielfeld[bomberman.getTileX()][bomberman.getTileY() + 1] = this.spielfeld[bomberman.getTileX()][bomberman.getTileY()];
+						this.spielfeld[bomberman.getTileX()][bomberman.getTileY()] = null;
+						this.bomberman.moveTileY(1, 3);
+					}
 				}
 			}
 		}
 			
 		if (KeyboardInput.getActionState(0, KeyboardInput.ACTION.MOVE_DOWN) == true)
-		{
-			BombermanEntity bomberman = (BombermanEntity) this.Cur_Gamescreen.getEntity("bomberman0");
-			
+		{	
 			if (bomberman.isMoving() == false)
 			{
-				if (this.spielfeld[bomberman.getTileX()][bomberman.getTileY() - 1] == null)
+				synchronized (this.spielfeld)
 				{
-					this.spielfeld[bomberman.getTileX()][bomberman.getTileY() - 1] = this.spielfeld[bomberman.getTileX()][bomberman.getTileY()];
-					this.spielfeld[bomberman.getTileX()][bomberman.getTileY()] = null;
-					this.Cur_Gamescreen.getEntity("bomberman0").moveTileY(-1, 3);
+					if (this.spielfeld[bomberman.getTileX()][bomberman.getTileY() - 1] == null)
+					{
+						this.spielfeld[bomberman.getTileX()][bomberman.getTileY() - 1] = this.spielfeld[bomberman.getTileX()][bomberman.getTileY()];
+						this.spielfeld[bomberman.getTileX()][bomberman.getTileY()] = null;
+						this.bomberman.moveTileY(-1, 3);
+					}
 				}
 			}
 		}
 		if (KeyboardInput.getActionState(0, KeyboardInput.ACTION.MOVE_LEFT) == true)
 		{
-			BombermanEntity bomberman = (BombermanEntity) this.Cur_Gamescreen.getEntity("bomberman0");
-			
 			if (bomberman.isMoving() == false)
 			{
-				if (this.spielfeld[bomberman.getTileX() - 1][bomberman.getTileY()] == null)
+				synchronized (this.spielfeld)
 				{
-					this.spielfeld[bomberman.getTileX() - 1][bomberman.getTileY()] = this.spielfeld[bomberman.getTileX()][bomberman.getTileY()];
-					this.spielfeld[bomberman.getTileX()][bomberman.getTileY()] = null;
-					this.Cur_Gamescreen.getEntity("bomberman0").moveTileX(-1, 3);
+					if (this.spielfeld[bomberman.getTileX() - 1][bomberman.getTileY()] == null)
+					{
+						this.spielfeld[bomberman.getTileX() - 1][bomberman.getTileY()] = this.spielfeld[bomberman.getTileX()][bomberman.getTileY()];
+						this.spielfeld[bomberman.getTileX()][bomberman.getTileY()] = null;
+						this.bomberman.moveTileX(-1, 3);
+					}
 				}
 			}
 		}
 			
 		if (KeyboardInput.getActionState(0, KeyboardInput.ACTION.MOVE_RIGHT) == true)
 		{
-			BombermanEntity bomberman = (BombermanEntity) this.Cur_Gamescreen.getEntity("bomberman0");
-			
 			if (bomberman.isMoving() == false)
 			{
-				if (this.spielfeld[bomberman.getTileX() + 1][bomberman.getTileY()] == null)
+				synchronized (this.spielfeld)
 				{
-					this.spielfeld[bomberman.getTileX() + 1][bomberman.getTileY()] = this.spielfeld[bomberman.getTileX()][bomberman.getTileY()];
-					this.spielfeld[bomberman.getTileX()][bomberman.getTileY()] = null;
-					this.Cur_Gamescreen.getEntity("bomberman0").moveTileX(1, 3);
+					if (this.spielfeld[bomberman.getTileX() + 1][bomberman.getTileY()] == null)
+					{
+						this.spielfeld[bomberman.getTileX() + 1][bomberman.getTileY()] = this.spielfeld[bomberman.getTileX()][bomberman.getTileY()];
+						this.spielfeld[bomberman.getTileX()][bomberman.getTileY()] = null;
+						this.bomberman.moveTileX(1, 3);
+					}
 				}
 			}
 			

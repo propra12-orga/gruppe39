@@ -6,7 +6,7 @@ public class Spielfeld
 {
 	public Entity[][] Arena;
 	
-	
+	private Gamescreen Cur_Gamescreen;
 	
 	// spielfeld inhalt ::: 
 	private Vector<BombermanEntity> EBomberman = new Vector<BombermanEntity>();
@@ -15,8 +15,12 @@ public class Spielfeld
 	private Vector<UnbreakableEntity> EUnbreakable = new Vector <UnbreakableEntity>();
 	private Vector<BreakableEntity> EBreakable = new Vector <BreakableEntity>();
 
-	public Spielfeld()
+	public Spielfeld(Gamescreen Cur_Gamescreen)
 	{
+		this.Cur_Gamescreen = Cur_Gamescreen;
+		
+		// debug only
+		this.Arena = new Entity[15][13];
 		// TODO
 		// - level aus xml datei auslesen -> eigene xml parser klasse
 		// - xml parser klasse schreibt werte, anzahl, positionen der einzelnen objekte in eine klasse
@@ -24,27 +28,101 @@ public class Spielfeld
 	}
 
 	
-	public void addInitialArenaToScreen(Gamescreen cur_gamescreen)
+	public void addInitialArenaToScreen()
 	{
+		/*
 		for (int i = 0; i < this.EUnbreakable.size(); i++)
 		{
-			cur_gamescreen.addEntityToScreen("unbreakable" + i, this.EBreakable.get(i));
+			this.Cur_Gamescreen.addEntityToScreen(this.EBreakable.get(i));
 		}
 		
 		for (int i = 0; i < this.EBreakable.size(); i++)
 		{
-			cur_gamescreen.addEntityToScreen("breakable" + i, this.EBreakable.get(i));
+			this.Cur_Gamescreen.addEntityToScreen("breakable" + i, this.EBreakable.get(i));
 		}
 		
 		for (int i = 0; i < this.EBomberman.size(); i++)
 		{
-			cur_gamescreen.addEntityToScreen("bomberman" + i, this.EBomberman.get(i));
+			this.Cur_Gamescreen.addEntityToScreen("bomberman" + i, this.EBomberman.get(i));
 		}
+		*/
 	}
 
+	public void addEntity(Entity e, String Name_Entity, int x, int y)
+	{
+		if (x > this.Arena.length || y > this.Arena[x].length)
+		{
+			// TODO errorhandling
+			return;
+		}
+		
+		// add to vector
+		if (e instanceof BombermanEntity)
+			this.EBomberman.add((BombermanEntity) e);
+		else if (e instanceof BombeEntity)
+			this.EBomb.add((BombeEntity) e);
+		else if (e instanceof BreakableEntity)
+			this.EBreakable.add((BreakableEntity) e);
+		else if (e instanceof UnbreakableEntity)
+			this.EUnbreakable.add((UnbreakableEntity) e);
+	
+		// to arena		
+		this.Arena[x][y] = e;
+		
+		// set correct coordinates
+		e.setTileX(x);
+		e.setTileY(y);
+		
+		// add to screen/engine for drawing
+		this.Cur_Gamescreen.addEntityToScreen(e);
+	}
+	
+	public void removeEntity(int x, int y)
+	{
+		Entity e = this.Arena[x][y];
+		
+		// check if available and remove
+		if (this.Cur_Gamescreen.isEntityOnScreen(e))
+			this.Cur_Gamescreen.removeEntityFromScreen(e);
+		else
+			return;
+		
+		// remove from vector
+		if (e instanceof BombermanEntity)
+			this.EBomberman.remove((BombermanEntity) e);
+		else if (e instanceof BombeEntity)
+			this.EBomb.remove((BombeEntity) e);
+		else if (e instanceof BreakableEntity)
+			this.EBreakable.remove((BreakableEntity) e);
+		else if (e instanceof UnbreakableEntity)
+			this.EUnbreakable.remove((UnbreakableEntity) e);
+	
+		// from arena		
+		this.Arena[x][y] = null;
+	}
+	
+	public void removePlayerFromArena(int x, int y)
+	{
+		Entity e = this.Arena[x][y];
+				
+		if (e instanceof BombermanEntity)
+		{
+			// remove from screen
+			this.Cur_Gamescreen.removeEntityFromScreen(e);
+			
+			// from arena		
+			this.Arena[x][y] = null;
+		}		
+	}
+	
+	public void removePlayerFromManagement(Entity e)
+	{
+		this.EBomberman.set(this.EBomberman.indexOf(e), null);
+	}
 	
 	public void addBomb(int x, int y)
 	{
+		// benutze addEntity hier
 		// TODO: 
 		// koordinaten pruefen (nicht ausserhalb vom spielfeld)
 		// bombenobjekt erzeugen
