@@ -8,11 +8,25 @@ public class BombermanEntity extends Entity
 	};
 	
 	private STATE state;
+	private int player_number;
 	
-	public BombermanEntity(String sprite_name, int x, int y)
+	public BombermanEntity(String sprite_name, int x, int y, int player_number)
 	{
 		super(sprite_name, x, y);
 		this.state = STATE.ALIVE;
+		this.player_number = player_number;
+	}
+	
+	public BombermanEntity(String sprite_name, int player_number)
+	{		
+		super(sprite_name, 0, 0);
+		this.state = STATE.ALIVE;
+		this.player_number = player_number;
+	}
+	
+	public int getPlayerNumber()
+	{
+		return this.player_number;
 	}
 
 	@Override
@@ -35,7 +49,7 @@ public class BombermanEntity extends Entity
 		}
 		else if (other instanceof ExplosionEntity)
 		{
-			// TODO...andere Sachen mšglich; z.B.: vom Spielfeld lšschen
+			// TODO...andere Sachen mï¿½glich; z.B.: vom Spielfeld lï¿½schen
 			this.state = STATE.DEAD; 
 			
 		}

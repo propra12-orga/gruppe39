@@ -1,112 +1,116 @@
+import java.util.HashMap;
 import java.util.Vector;
 
 
 public class GamescreenGameMode extends Gamescreen
 {
-	private Entity[][] Arena;
+	public Vector<Entity>[][] Arena;
 	
 	// spielfeld inhalt ::: 
-	private Vector<BombermanEntity> EBomberman = new Vector<BombermanEntity>();
-	private Vector<BombeEntity> EBomb = new Vector <BombeEntity>();
+
+	private HashMap<Integer, BombermanEntity> EBomberman = new HashMap<Integer, BombermanEntity>();
+	//private Vector<BombermanEntity> EBomberman = new Vector<BombermanEntity>();
+	/*	private Vector<BombeEntity> EBomb = new Vector <BombeEntity>();
 	private Vector<ExplosionEntity> EExplosion = new Vector <ExplosionEntity>();
 	private Vector<UnbreakableEntity> EUnbreakable = new Vector <UnbreakableEntity>();
 	private Vector<BreakableEntity> EBreakable = new Vector <BreakableEntity>();
-	
+	*/
 	public GamescreenGameMode()
 	{
 		super();
 		
 		// debug only
-		this.Arena = new Entity[15][13];
+		this.Arena = (Vector<Entity>[][]) new Vector[15][13];
+		
+		for (int i = 0; i < this.Arena.length; i++)
+		{
+			for (int j = 0; j < this.Arena[i].length; j++)
+			{
+				this.Arena[i][j] = new Vector<Entity>();
+			}
+		}
 		// TODO
 		// - level aus xml datei auslesen -> eigene xml parser klasse
 		// - xml parser klasse schreibt werte, anzahl, positionen der einzelnen objekte in eine klasse
 		// - Arena initialisieren: klasse mit werten aus tabelle an funktion hier uebergeben
 	}
 	
-	
-	public void addInitialArenaToScreen()
+	// ===================================
+	// GET
+	// ===================================
+	public Entity[] getEntities(int x, int y)
 	{
-		/*
-		for (int i = 0; i < this.EUnbreakable.size(); i++)
+		if (this.checkCoordinates(x, y) == false)
 		{
-			this.Cur_Gamescreen.addEntityToScreen(this.EBreakable.get(i));
+			DebugConsole.PrintError("getting entity failed, out of bounds");
+			return null;
 		}
 		
-		for (int i = 0; i < this.EBreakable.size(); i++)
-		{
-			this.Cur_Gamescreen.addEntityToScreen("breakable" + i, this.EBreakable.get(i));
-		}
+		Entity[] array = new Entity[0];
 		
-		for (int i = 0; i < this.EBomberman.size(); i++)
-		{
-			this.Cur_Gamescreen.addEntityToScreen("bomberman" + i, this.EBomberman.get(i));
-		}
-		*/
+		return this.Arena[x][y].toArray(array);
 	}
 	
-	public Entity getEntity(int x, int y)
+	public Entity getEntity(int x, int y, int z)
 	{
-		// TODO: check x and y if we are within boundaries
-		return this.Arena[x][y];
-	}
-
-	public void addEntity(Entity e, int x, int y)
-	{
-		if (x > this.Arena.length || y > this.Arena[x].length)
+		if (this.checkCoordinates(x, y) == false)
 		{
-			// TODO errorhandling
-			return;
+			DebugConsole.PrintError("getting entity failed, out of bounds");
+			return null;
 		}
 		
-		// add to vector
-		if (e instanceof BombermanEntity)
-			this.EBomberman.add((BombermanEntity) e);
-		else if (e instanceof BombeEntity)
-			this.EBomb.add((BombeEntity) e);
-		else if (e instanceof BreakableEntity)
-			this.EBreakable.add((BreakableEntity) e);
-		else if (e instanceof UnbreakableEntity)
-			this.EUnbreakable.add((UnbreakableEntity) e);
-	
-		// to arena		
-		this.Arena[x][y] = e;
-		
-		// set correct coordinates
-		e.setTileX(x);
-		e.setTileY(y);
-		
-		// add to screen/engine for drawing
-		this.addEntityToScreen(e);
+		return this.Arena[x][y].get(z);
 	}
 	
-	public void removeEntity(int x, int y)
+	
+	public BombermanEntity getBomberman(int player)
 	{
-		Entity e = this.Arena[x][y];
+		BombermanEntity E = this.EBomberman.get(new Integer(player));
+		
+		if (E == null)
+			DebugConsole.PrintError("Invalid player id, not available in hash map");
+		
+		return E;		
+	}
+	
+	
+	public int getNumberActivePlayers()
+	{
+		return this.EBomberman.size();
+	}
+	
+	// ===================================
+	// REMOVE
+	// ===================================
+	
+	// COMPLETELY remove/delete entity
+	public void removeEntity(int x, int y, int z)
+	{
+		Entity e = this.Arena[x][y].get(z);
 		
 		// check if available and remove
 		if (this.isEntityOnScreen(e))
 			this.removeEntityFromScreen(e);
-		else
-			return;
 		
-		// remove from vector
+		// if we have a bomberman entity, remove it from the hash map
 		if (e instanceof BombermanEntity)
-			this.EBomberman.remove((BombermanEntity) e);
-		else if (e instanceof BombeEntity)
-			this.EBomb.remove((BombeEntity) e);
-		else if (e instanceof BreakableEntity)
-			this.EBreakable.remove((BreakableEntity) e);
-		else if (e instanceof UnbreakableEntity)
-			this.EUnbreakable.remove((UnbreakableEntity) e);
+			this.EBomberman.remove(((BombermanEntity) e).getPlayerNumber());
 	
 		// from arena		
-		this.Arena[x][y] = null;
+		this.Arena[x][y].remove(z);
 	}
 	
-	public void removePlayerFromArena(int x, int y)
+	// use this if a player dies in the arena, so we still have the
+	// datastructure available for scoring and stuff
+	public void removePlayerFromArena(int x, int y, int z)
 	{
-		Entity e = this.Arena[x][y];
+		if (this.checkCoordinates(x, y) == false)
+		{
+			DebugConsole.PrintError("removing player from arena failed, invalid coordinates");
+			return;
+		}
+		
+		Entity e = this.Arena[x][y].get(z);
 				
 		if (e instanceof BombermanEntity)
 		{
@@ -114,16 +118,86 @@ public class GamescreenGameMode extends Gamescreen
 			this.removeEntityFromScreen(e);
 			
 			// from arena		
-			this.Arena[x][y] = null;
-		}		
+			this.Arena[x][y].remove(z);
+		}	
+		else
+		{
+			DebugConsole.PrintError("entity not an instance of BombermanEntity");
+		}
 	}
 	
-	public void removePlayerFromManagement(Entity e)
+	public void removePlayerFromArena(int player)
 	{
-		this.EBomberman.set(this.EBomberman.indexOf(e), null);
+		if (this.EBomberman.containsKey(player) == false)
+		{
+			DebugConsole.PrintError("invalid player number");
+			return;
+		}
+		
+		BombermanEntity E = this.EBomberman.get(player);
+
+		this.removeEntityFromScreen(E);
+		this.Arena[E.getTileX()][E.getTileY()].remove(E);
 	}
 	
-	public void addBomb(int x, int y, int explosion_radius, int explosion_speed)
+	// use this, if above function was called before.
+	// this removes the bomberman entity from the hash table, so its gone forever
+	public void removePlayerFromManagement(int player)
+	{
+		BombermanEntity E = this.EBomberman.get(player);
+	
+		if (E == null)
+			DebugConsole.PrintError("no such player does exist, id: " + player);
+	}
+	
+	
+	public void clearArena()
+	{
+		// clear arena and remove entities from screen
+		for (int i = 0; i < this.Arena.length; i++)
+		{
+			for (int j = 0; j < this.Arena[i].length; j++)
+			{
+				for (int k = 0; k < this.Arena[i][j].size(); k++)
+				{
+					this.removeEntityFromScreen(this.getEntity(i, j, k));
+					this.Arena[i][j].remove(k);
+				}
+				
+			}
+		}
+		
+		// clear hash map of the bomberman management
+		this.EBomberman.clear();		
+	}
+	
+	// ===================================
+	// ADD
+	// ===================================
+	
+	public void addBomberman(int x, int y, int player_number)
+	{
+		if (this.checkCoordinates(x, y) == false)
+		{
+			DebugConsole.PrintError("Adding new bomberman to arena failed, coordinates out of bounds");
+			return;
+		}
+
+		// TODO: acording to player_number, different colour
+		
+		BombermanEntity e = new BombermanEntity("Bomberman", player_number);
+		e.setTile(x, y);
+		this.addEntityToScreen(e);
+		
+		// add to arena 
+		this.Arena[x][y].add(e);
+	
+		// and to management system
+		this.EBomberman.put(new Integer(player_number), e);
+	}
+	
+
+	public void addBomb(int x, int y, int time_exploding, int delay_ticking, int explosion_speed, int explosion_radius, int delay_flames, int removing_speed)
 	{
 		if (this.checkCoordinates(x, y) == false)
 		{
@@ -133,48 +207,112 @@ public class GamescreenGameMode extends Gamescreen
 		
 		BombeEntity E = new BombeEntity("Bomb");
 		E.setTile(x, y);
-		this.Arena[x][y] = E;
+		this.Arena[x][y].add(E);
 		this.addEntityToScreen(E);
 		
-		// TODO
-		E.activate(5, explosion_speed, explosion_radius, this);
-			
+		// set parameters
+		E.setParamters(time_exploding, delay_ticking, explosion_speed, explosion_radius, delay_flames, removing_speed);
 		
-		
-		// TODO 
-		// benutze addEntity hier
-		// TODO: 
-		// koordinaten pruefen (nicht ausserhalb vom spielfeld)
-		// bombenobjekt erzeugen
-		// spielfeld an bombe uebergeben, damit bombe nach beenden des tickvorgangs die explosionen erzeugen kann
-		// synchronisation fuer zugriff auf das spielfeld (wichtig!!!)		
+		// activate bomb
+		E.activate(this);
 	}
 	
-	private boolean checkCoordinates(int x, int y)
+	public void addUnbreakable(int x, int y)
 	{
-		if (x > this.Arena.length || y > this.Arena.length)
-			return false;
-		else
-			return true;
+		if (this.checkCoordinates(x, y) == false)
+		{
+			DebugConsole.PrintError("Adding new unbreakable to arena failed, coordinates out of bounds");
+			return;
+		}
+		
+		UnbreakableEntity E = new UnbreakableEntity("Tile_UnBreakable");
+		E.setTile(x, y);
+		
+		this.Arena[x][y].add(E);
+		this.addEntityToScreen(E);
 	}
 	
-	public void fillArena(/* parameter */)
+	public void addBreakable(int x, int y)
+	{
+		if (this.checkCoordinates(x, y) == false)
+		{
+			DebugConsole.PrintError("Adding new breakable to arena failed, coordinates out of bounds");
+			return;
+		}
+		
+		BreakableEntity E = new BreakableEntity("Tile_Breakable");
+		E.setTile(x, y);
+		
+		this.Arena[x][y].add(E);
+		this.addEntityToScreen(E);
+	}
+	
+	public void addExit(int x, int y)
+	{
+		// TODO
+	}
+	
+	public void addExplosion(int x, int y)
+	{
+		if (this.checkCoordinates(x, y) == false)
+		{
+			DebugConsole.PrintError("Adding new explosion to arena failed, coordinates out of bounds");
+			return;
+		}
+		
+		ExplosionEntity E = new ExplosionEntity("Explosion");
+		E.setTile(x, y);
+		
+		this.Arena[x][y].add(E);
+		this.addEntityToScreen(E);
+	}
+	
+	
+	
+	public void loadArena(/* String level_name */)
 	{
 		// TODO 
 		// arbeite alle kategorien hier ab und fuelle das spielfeld
 		// entsprechend der werte, die aus der datei ausgelesen wurden
 		// fuelle hierzu nicht nur Arena, sondern auch die vektoren
+		// aus xml ausgelesenes zeug hier
+		/*
+		this.addBomberman(x, y, player_number);
+		this.addBreakable(x, y);
+		this.addUnbreakable(x, y);
+		this.addExit(x, y);
+		*/
+		
+		// temp static arena
+		// ring of unbreakables
+		for (int i = 0; i < 15; i++)
+		{
+			this.addUnbreakable(i, 0);
+			this.addUnbreakable(i, 12);
+		}
+						
+		for (int i = 1; i < 13; i++)
+		{
+			this.addUnbreakable(0, i);
+			this.addUnbreakable(14, i);
+		}
+				
+		// bomberman
+		this.addBomberman(2, 2, 0);
+		this.addBomberman(10, 10, 1);
+		
+		// some breakables
+		this.addBreakable(5, 5);
+		this.addBreakable(9, 10);
+	
 	}
 	
-	public void clearArena()
+	public boolean checkCoordinates(int x, int y)
 	{
-		for (int i = 0; i < this.Arena.length; i++)
-		{
-			for (int j = 0; j < this.Arena[i].length; j++)
-			{
-				this.Arena[i][j] = null;
-			}
-		}
+		if (x >= 0 && y >= 0 && x < this.Arena.length && y < this.Arena[x].length)
+			return true;
+		else
+			return false;
 	}
 	
 }

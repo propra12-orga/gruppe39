@@ -9,9 +9,15 @@ public class UnbreakableEntity extends Entity{
 	};
 	
 	private STATE state;
+	
 	public UnbreakableEntity(String sprite_name, int x, int y)
 	{
 		super(sprite_name, x, y);
+	}
+	
+	public UnbreakableEntity(String sprite_name)
+	{
+		super(sprite_name);
 	}
   
 	

@@ -129,9 +129,8 @@ public class KeyboardInput extends KeyAdapter
 		}
 		
 		// default configuration for our keyboard input
-		// FIXME: quick bug fix: up and down are reverted for some unknown reason
-		KeyboardInput.Keycode_Config[player][ACTION.MOVE_UP.ordinal()] = KeyEvent.VK_DOWN;//KeyEvent.VK_UP
-		KeyboardInput.Keycode_Config[player][ACTION.MOVE_DOWN.ordinal()] = KeyEvent.VK_UP; //KeyEvent.VK_DOWN
+		KeyboardInput.Keycode_Config[player][ACTION.MOVE_UP.ordinal()] = KeyEvent.VK_UP;
+		KeyboardInput.Keycode_Config[player][ACTION.MOVE_DOWN.ordinal()] = KeyEvent.VK_DOWN; 
 		KeyboardInput.Keycode_Config[player][ACTION.MOVE_LEFT.ordinal()] = KeyEvent.VK_LEFT;
 		KeyboardInput.Keycode_Config[player][ACTION.MOVE_RIGHT.ordinal()] = KeyEvent.VK_RIGHT;
 		KeyboardInput.Keycode_Config[player][ACTION.PAUSE.ordinal()] = KeyEvent.VK_ENTER;

@@ -17,6 +17,12 @@ public class ExplosionEntity extends Entity{
 		super(sprite_name, x, y);
 		this.state = STATE.NO_STATE;
 	}
+	
+	public ExplosionEntity(String sprite_name)
+	{
+		super(sprite_name);
+		this.state = STATE.NO_STATE;
+	}
 
 	@Override
 	public void collidedWith(Entity other)
@@ -24,15 +30,15 @@ public class ExplosionEntity extends Entity{
 		if (other instanceof BreakableEntity)
 		{
 			BreakableEntity bre_e = (BreakableEntity) other;
-			// hier sollte diese BreakableEntity von Spielfeld gelšscht werden. Das kann in zwei Mšglichkeiten gemacht werden:
-			//  1- ein globales Objekt / Variable fŸr Spielfeld damit man auf sie hier auch zugreiffen kann.
-			//  2- ein Thread, das stŠndig lŠuft und ŸberprŸft: falls STATE == BROKEN dann lšschen
+			// hier sollte diese BreakableEntity von Spielfeld gelï¿½scht werden. Das kann in zwei Mï¿½glichkeiten gemacht werden:
+			//  1- ein globales Objekt / Variable fï¿½r Spielfeld damit man auf sie hier auch zugreiffen kann.
+			//  2- ein Thread, das stï¿½ndig lï¿½uft und ï¿½berprï¿½ft: falls STATE == BROKEN dann lï¿½schen
 			bre_e.setState(BreakableEntity.STATE.BROKEN);
 		}
 		// TODO: Bomberman und bombe ---> done!
 		if (other instanceof BombermanEntity)
 		{
-			// TODO...andere Sachen mšglich; z.B.: vom Spielfeld lšschen
+			// TODO...andere Sachen mï¿½glich; z.B.: vom Spielfeld lï¿½schen
 			BombermanEntity bom_e = (BombermanEntity) other;
 			bom_e.setState(BombermanEntity.STATE.DEAD);
 		}
@@ -58,7 +64,7 @@ public class ExplosionEntity extends Entity{
 			x = this.getLocationX();
 			y = this.getLocationY();
 			
-			//TODO!!  hier werden die Explosionsfelder hinzugefŸgt, dafŸr wird aber das Spielfeld gebraucht.
+			//TODO!!  hier werden die Explosionsfelder hinzugefï¿½gt, dafï¿½r wird aber das Spielfeld gebraucht.
 		}
 	}
 }

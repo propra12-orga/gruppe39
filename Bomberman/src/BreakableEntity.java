@@ -16,6 +16,12 @@ public class BreakableEntity extends Entity
 		super(sprite_name, x, y);
 		this.state = STATE.UNBROKEN;
 	}
+	
+	public BreakableEntity(String sprite_name)
+	{
+		super(sprite_name);
+		this.state = STATE.UNBROKEN;
+	}
 
 	@Override
 	public void collidedWith(Entity other)

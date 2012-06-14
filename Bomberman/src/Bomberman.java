@@ -155,11 +155,10 @@ public class Bomberman
 				// apply the newly generated gamescreen to the rendering window
 				this.Render_Window.setCurrentScreen(this.Cur_Gamescreen);
 				
-				// we are done, indicate this
-				this.Prev_Gamestate = this.Cur_Gamestate;
-				
 				DebugConsole.Print("Creating new state successful, running now");
-			}			
+			}	
+			
+			this.Prev_Gamestate.set(this.Cur_Gamestate.get());
 
 			// execute main of our current state
 			this.Screen_State.main(delta);
