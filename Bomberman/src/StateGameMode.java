@@ -21,9 +21,9 @@ public class StateGameMode implements InterfaceState
 	private STATE state = STATE.NO_STATE;
 	
 	private Gamestate Cur_Gamestate;
-	private Gamescreen Cur_Gamescreen;
+	private GamescreenGameMode Cur_Gamescreen;
 	
-	public StateGameMode(Gamestate Cur_State, Gamescreen Cur_Screen)
+	public StateGameMode(Gamestate Cur_State, GamescreenGameMode Cur_Screen)
 	{
 		// important: these are references
 		this.Cur_Gamestate = Cur_State;
@@ -42,7 +42,7 @@ public class StateGameMode implements InterfaceState
 	{
 		// init inputs for one player
 		KeyboardInput.init(1);
-		
+	/*	
 		// ring of unbreakables
 		for (int i = 0; i < 15; i++)
 		{
@@ -71,6 +71,8 @@ public class StateGameMode implements InterfaceState
 		this.Cur_Gamescreen.addEntityToScreen(e);
 		this.spielfeld[1][1] = e;
 		this.bomberman = (BombermanEntity) e;
+		*/
+		this.Cur_Gamescreen.addBomb(5, 5, 3, 500);
 		
 	}
 
@@ -82,9 +84,15 @@ public class StateGameMode implements InterfaceState
 		// - kollisionsabfrage und neue position(en) berechnen, evtl. zustandsabfrage
 		// - zustandsabfrage und verarbeitung der zustaende der entities
 
-	
-		// TODO: abfrage, ob bomberman figuren noch am leben sind und entsprechendes machen			
 		
+		
+		
+		
+		
+		
+		
+		// TODO: abfrage, ob bomberman figuren noch am leben sind und entsprechendes machen			
+	/*	
 		// statt dead abfrage, abfrage ob entity aus spielfeld null ist
 		if (this.bomberman.getState() == BombermanEntity.STATE.DEAD)
 		{
@@ -155,8 +163,7 @@ public class StateGameMode implements InterfaceState
 			}
 			
 		}
-		
-			
+	*/
 
 		// kollisionsabfrage
 		

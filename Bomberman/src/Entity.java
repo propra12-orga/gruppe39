@@ -58,6 +58,13 @@ public abstract class Entity {
 		this.y = y;
 	}
 	
+	public Entity(String sprite_name)
+	{
+		this.sprite = SpriteStorage.get().getSprite(sprite_name);
+		this.x = 0;
+		this.y = 0;
+	}
+	
 	public void setSprite(String sprite_name)
 	{
 		this.sprite = SpriteStorage.get().getSprite(sprite_name);
@@ -138,13 +145,21 @@ public abstract class Entity {
 				this.is_moving_y = false;
 		}
 	}
+	
+	public void setTile(int tile_x, int tile_y)
+	{
+		this.setTileX(tile_x);
+		this.setTileY(tile_y);
+	}
 
-	public void setTileX(int tile_x) {
+	public void setTileX(int tile_x) 
+	{
 		if (this.is_moving_x == false)
 			this.x = tile_x * 32;
 	}
 
-	public void setTileY(int tile_y) {
+	public void setTileY(int tile_y) 
+	{
 		if (this.is_moving_y == false)
 			this.y = tile_y * 32;
 	}

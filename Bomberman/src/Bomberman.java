@@ -137,8 +137,8 @@ public class Bomberman
 					case GAME_MODE:
 					{
 						DebugConsole.Print("New gamestate is GAME_MODE");
-						this.Cur_Gamescreen = new Gamescreen();
-						this.Screen_State = new StateGameMode(this.Cur_Gamestate, this.Cur_Gamescreen);
+						this.Cur_Gamescreen = new GamescreenGameMode();
+						this.Screen_State = new StateGameMode(this.Cur_Gamestate, (GamescreenGameMode) this.Cur_Gamescreen);
 						break;
 					}
 					default:
