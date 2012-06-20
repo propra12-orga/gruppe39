@@ -1,29 +1,29 @@
 <?xml version="1.0"?>
 <Level>
 	<header>
-		<size X = "15"> </size>
-		<size X = "13"> </size>
+		<sizeX = "15"> </size>
+		<sizeY = "13"> </size>
 	</header>
 	<Spielfeld>
-		<Entity type="Bomberman">
+		<Entity ="Bomberman">
 			<Player="1"> </Player>
 			<X = "0"> </X>
 			<Y = "1"> </Y>
    	 	</Entity>	
-   	 	<Entity type="Bomberman">
+   	 	<Entity ="Bomberman">
 			<Player="2"> </Player>
 			<X = "0"> </X>
 			<Y = "2"> </Y>
-		 </Entity>	
-   	 	<Entity type="Breakable">
+		</Entity>	
+   	 	<Entity ="Breakable">
 			<X = "0"> </X>
 			<Y = "3"> </Y>
-    	 </Entity>
-    	<Entity type="Unbreakable">
+    	</Entity>
+    	<Entity ="Unbreakable">
 			<X = "0"> </X>
 			<Y = "4"> </Y>
     	</Entity>
-    	<Entity type="Exit">
+    	<Entity ="Exit">
 			<X = "0"> </X>
 			<Y = "5"> </Y>
     	</Entity>
