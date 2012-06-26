@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<Level>
+	<header>
+		<sizeX = "15"> </size>
+		<sizeY = "13"> </size>
+	</header>
+	<Spielfeld>
+		<Entity ="Bomberman">
+			<Player="1"> </Player>
+			<X = "0"> </X>
+			<Y = "1"> </Y>
+   	 	</Entity>	
+   	 	<Entity ="Bomberman">
+			<Player="2"> </Player>
+			<X = "0"> </X>
+			<Y = "2"> </Y>
+		</Entity>	
+   	 	<Entity ="Breakable">
+			<X = "0"> </X>
+			<Y = "3"> </Y>
+    	</Entity>
+    	<Entity ="Unbreakable">
+			<X = "0"> </X>
+			<Y = "4"> </Y>
+    	</Entity>
+    	<Entity ="Exit">
+			<X = "0"> </X>
+			<Y = "5"> </Y>
+    	</Entity>
+	</Spielfeld>
+</Level>
