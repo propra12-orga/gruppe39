@@ -34,7 +34,10 @@ public class StateGameModeServer implements InterfaceState
 		
 		KeyboardInput.configSetActionToKey(0, KeyEvent.VK_ENTER, KeyboardInput.ACTION.BOMB);
 		
-		this.Cur_Gamescreen.loadArena("bla");
+		if (Bomberman.level == null)
+			this.Cur_Gamescreen.loadNetworkArena();
+		else
+			this.Cur_Gamescreen.loadArena(Bomberman.level);
 		
 		// TODO
 		this.Server = new BombermanServer(Bomberman.port);

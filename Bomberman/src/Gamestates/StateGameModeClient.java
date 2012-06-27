@@ -36,7 +36,10 @@ public class StateGameModeClient implements InterfaceState
 		
 		KeyboardInput.configSetActionToKey(0, KeyEvent.VK_ENTER, KeyboardInput.ACTION.BOMB);
 		
-		this.Cur_Gamescreen.loadArena("bla");
+		if (Bomberman.level == null)
+			this.Cur_Gamescreen.loadNetworkArena();
+		else
+			this.Cur_Gamescreen.loadArena(Bomberman.level);
 		
 		this.Client = new BombermanClient(Bomberman.address, Bomberman.port);
 		this.Client.start();		

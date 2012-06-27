@@ -1,7 +1,10 @@
 package Engine;
+import java.awt.Point;
 import java.util.HashMap;
 import java.util.Random;
 import java.util.Vector;
+
+import javax.swing.JOptionPane;
 
 import Entities.BombeEntity;
 import Entities.BombermanEntity;
@@ -282,24 +285,54 @@ public class GamescreenGameMode extends Gamescreen
 	{
 		if (filename != null)
 		{
-			// TODO: load from file
-			// both, server AND client have to have the same level
-			this.addBomberman(1, 1, 0);
-			this.addBomberman(13, 11, 1);
-		
-			this.generateUnbreakablesFrame();
-			this.generateUnbreakablesField();
+			Parser LevelParser = new Parser(filename);
 			
-			this.addBreakable(3, 1);
-			this.addBreakable(1, 3);
+			Vector<Point> Bombermans = LevelParser.getBombermans();
+			Vector<Point> Breakables = LevelParser.getBreakable();
+			Vector<Point> Unbreakables = LevelParser.getUnbreakable();
+			Vector<Point> Exit = LevelParser.getExit();
 			
-			this.addBreakable(13, 9);
-			this.addBreakable(11, 11);
+			if (Bombermans == null || Breakables == null || Unbreakables == null || Exit == null)
+			{
+				DebugConsole.PrintError("level file error");
+				JOptionPane.showMessageDialog(super.getRenderWindow(), "Fehler in Leveldatei");
+				while (true)
+				{}
+			}
+			
+			for (int i = 0; i < Bombermans.size(); i++)
+			{
+				this.addBomberman(Bombermans.get(i).x, Bombermans.get(i).y, i);
+			}
+			
+			for (int i = 0; i < Breakables.size(); i++)
+			{
+				this.addBreakable(Breakables.get(i).x, Breakables.get(i).y);
+			}
+			
+			for (int i = 0; i < Unbreakables.size(); i++)
+			{
+				this.addUnbreakable(Unbreakables.get(i).x, Unbreakables.get(i).y);
+			}
+			
+			for (int i = 0; i < Exit.size(); i++)
+			{
+				this.addExit(Exit.get(i).x, Exit.get(i).y);
+			}
 		}
 		else
 		{
 			this.loadRandomArena();
 		}
+	}
+	
+	public void loadNetworkArena()
+	{
+		this.addBomberman(1, 1, 0);
+		this.addBomberman(13, 11, 1);
+		
+		this.generateUnbreakablesField();
+		this.generateUnbreakablesFrame();
 	}
 	
 	public void loadRandomArena()

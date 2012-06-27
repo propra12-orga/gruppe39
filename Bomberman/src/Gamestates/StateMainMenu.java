@@ -2,8 +2,10 @@ package Gamestates;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -33,6 +35,7 @@ public class StateMainMenu implements InterfaceState, ActionListener
 	private JPanel contentPane;
 	private JTextField textField;
 	private JTextField textField_1;
+	private JTextPane textPane;
 	
 	private JButton btoenffnen = new JButton("Öffnen");
 	private JButton btnStart = new JButton("Start");
@@ -94,7 +97,7 @@ public class StateMainMenu implements InterfaceState, ActionListener
 		lblGeladenesLevel.setBounds(30, 306, 140, 15);
 		contentPane.add(lblGeladenesLevel);
 		
-		JTextPane textPane = new JTextPane();
+		textPane = new JTextPane();
 		textPane.setEditable(false);
 		textPane.setBounds(30, 333, 107, 21);
 		contentPane.add(textPane);
@@ -158,7 +161,15 @@ public class StateMainMenu implements InterfaceState, ActionListener
 	
 	private void openLevel()
 	{
-		// TODO
+		JFileChooser Fc = new JFileChooser();
+		Fc.showOpenDialog(this.Frame);
+		File File = Fc.getSelectedFile();
+		if (File == null)
+			return;
+		
+		this.textPane.setText(File.getName());
+		Bomberman.level = File.getPath();
+		
 	}
 	
 	private void startGameLocal()

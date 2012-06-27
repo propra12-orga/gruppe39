@@ -9,6 +9,32 @@ import java.util.Vector;
 
 public class Parser 
 {
+	public static void main(String args[])
+	{
+		Parser level = new Parser("test.txt");
+		
+		for (int i = 0; i < level.getBombermans().size(); i++)
+		{
+			System.out.println("Bomberman " + i + ": " + level.getBombermans().get(i).toString());
+		}
+		
+		for (int i = 0; i < level.getBreakable().size(); i++)
+		{
+			System.out.println("Breakable " + i + ": " + level.getBreakable().get(i).toString());
+		}
+		
+		for (int i = 0; i < level.getUnbreakable().size(); i++)
+		{
+			System.out.println("getUnbreakable " + i + ": " + level.getUnbreakable().get(i).toString());
+		}
+		
+		for (int i = 0; i < level.getExit().size(); i++)
+		{
+			System.out.println("Exit " + i + ": " + level.getExit().get(i).toString());
+		}
+	}
+	
+	
 	private Vector<Point> Bombermans = new Vector<Point>();
 	private Vector<Point> Breakables = new Vector<Point>();
 	private Vector<Point> Unbreakables = new Vector<Point>();
@@ -67,17 +93,19 @@ public class Parser
 				/** Alle Vektoren werden hier mit Koordinaten der Elemente befuellt
 				 * 
 				 */
+					case 0:
+						break;
 					case 1:
-						Bombermans.addElement(new Point(i,j));
+						Bombermans.addElement(new Point(j,i));
 						break;
 					case 2:
-						Unbreakables.addElement(new Point(i,j));
+						Unbreakables.addElement(new Point(j,i));
 						break;
 					case 3:
-						Breakables.addElement(new Point(i,j));
+						Breakables.addElement(new Point(j,i));
 						break;
 					case 4:
-						Exit.addElement(new Point(i,j));
+						Exit.addElement(new Point(j,i));
 						break;
 					default:
 						System.out.println("ERROR Das sollte nicht passieren !!");
@@ -120,7 +148,7 @@ public class Parser
 				lines ++;
 				for (i=0; i<arr.length; i++)
 				{
-					if ( ! ( (arr[i] > 48 ) && (arr[i] < 53) ) )
+					if ( ! ( (arr[i] > 47 ) && (arr[i] < 53) ) )
 					{
 						System.err.println("Char '"+ arr[i] + "' ist nicht valid !!");
 						System.err.println(" unterbrechen  ");

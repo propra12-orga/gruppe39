@@ -3,6 +3,7 @@ package Gamestates;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 
+import Engine.Bomberman;
 import Engine.GamescreenGameMode;
 import Engine.Gamestate;
 import Engine.InterfaceState;
@@ -62,7 +63,7 @@ public class StateGameMode implements InterfaceState
 		KeyboardInput.configSetActionToKey(1, KeyEvent.VK_D, KeyboardInput.ACTION.MOVE_RIGHT);
 		KeyboardInput.configSetActionToKey(1, KeyEvent.VK_B, KeyboardInput.ACTION.BOMB);
 
-		this.Cur_Gamescreen.loadArena(null);
+		this.Cur_Gamescreen.loadArena(Bomberman.level);
 	}
 
 
@@ -315,7 +316,7 @@ public class StateGameMode implements InterfaceState
 		{
 			// TODO: result screen?
 			// just exit to no state for now
-			this.Cur_Gamestate.set(Gamestate.STATE.NO_STATE);
+			//this.Cur_Gamestate.set(Gamestate.STATE.NO_STATE);
 		}		
 	}
 	
