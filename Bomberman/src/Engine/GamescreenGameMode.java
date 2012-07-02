@@ -283,7 +283,15 @@ public class GamescreenGameMode extends Gamescreen
 	
 	public void loadArena(String filename)
 	{
-		if (filename != null)
+		if (filename == null)
+		{
+			this.loadNetworkArena();
+		}
+		else if (filename == "map.ran")
+		{
+			this.loadRandomArena();
+		}
+		else if (filename != null)
 		{
 			Parser LevelParser = new Parser(filename);
 			
@@ -429,8 +437,12 @@ public class GamescreenGameMode extends Gamescreen
 	
 	private int randomNumber(int min, int max) 
 	{
-		max += 1;
-	    return min + (new Random()).nextInt(max-min);
+		max += 3;
+		int tmp = min + (new Random()).nextInt(max-min);
+		if (tmp == 0)
+			return 0;
+		else 
+			return 1;
 	}
 	
 	public boolean checkCoordinates(int x, int y)

@@ -1,6 +1,10 @@
 package Gamestates;
 
 import java.awt.event.KeyEvent;
+import java.io.IOException;
+import java.net.UnknownHostException;
+
+import javax.swing.JOptionPane;
 
 import Engine.Bomberman;
 import Engine.Gamescreen;
@@ -22,6 +26,8 @@ public class StateGameModeClient implements InterfaceState
 	
 	private BombermanClient Client;
 	
+	private boolean game_over = false;
+	
 	public StateGameModeClient(Gamestate Cur_State, GamescreenGameMode Cur_Screen)
 	{
 		// important: these are references
@@ -42,7 +48,15 @@ public class StateGameModeClient implements InterfaceState
 			this.Cur_Gamescreen.loadArena(Bomberman.level);
 		
 		this.Client = new BombermanClient(Bomberman.address, Bomberman.port);
-		this.Client.start();		
+		try {
+			this.Client.init();
+		} catch (UnknownHostException e) {
+			JOptionPane.showMessageDialog(Cur_Gamescreen.getRenderWindow().Frame, "Verbindung konnte nicht hergestellt werden: Server unbekannt");
+			System.exit(1);
+		} catch (IOException e) {
+			JOptionPane.showMessageDialog(Cur_Gamescreen.getRenderWindow().Frame, "Verbindung konnte nicht hergestellt werden.");
+			System.exit(1);
+		}		
 		
 	}
 
@@ -269,12 +283,48 @@ public class StateGameModeClient implements InterfaceState
 					synchronized (this.Cur_Gamescreen)
 					{
 						// TODO: check, ob bereits eine bombe auf aktuellem feld liegt. mehrfaches legen auf gleichem feld sollte nicht sein
-						this.Cur_Gamescreen.addBomb(Bomberman.getTileX(), Bomberman.getTileY(), 500, 0, 50, 5, 250, 50);
+						this.Cur_Gamescreen.addBomb(Bomberman.getTileX(), Bomberman.getTileY(), 500, 0, 50, 2, 250, 50);
 					}
 				}
 			}
 		}
+		
+		// check on deaths
+		int death_count = 0;
+		for (int player = 0; player < this.Cur_Gamescreen.getNumberActivePlayers(); player++)
+		{
+			BombermanEntity Bomberman = this.Cur_Gamescreen.getBomberman(player);
+			
+			if (Bomberman.getState() == BombermanEntity.STATE.DEAD)
+			{
+				if (game_over == false)
+				{
+					game_over = true;
 					
+					death_count++;
+					if (player == 0)
+					{
+						new Thread(new Runnable() 
+						{
+							public void run() 
+							{
+								JOptionPane.showMessageDialog(Cur_Gamescreen.getRenderWindow().Frame, "Spieler 2 hat gewonnen!");
+							}
+					    }).start();
+					}
+					else
+					{
+						new Thread(new Runnable() 
+						{
+							public void run() 
+							{
+								JOptionPane.showMessageDialog(Cur_Gamescreen.getRenderWindow().Frame, "Spieler 1 hat gewonnen!");
+							}
+					    }).start();
+					}
+				}
+			}		
+		}			
 		
 		
 		

@@ -1,6 +1,9 @@
 package Gamestates;
 
 import java.awt.event.KeyEvent;
+import java.io.IOException;
+
+import javax.swing.JOptionPane;
 
 import Engine.Bomberman;
 import Engine.Gamescreen;
@@ -19,6 +22,8 @@ public class StateGameModeServer implements InterfaceState
 	private GamescreenGameMode Cur_Gamescreen;
 	
 	private BombermanServer Server;
+	
+	private boolean game_over = false;
 	
 	public StateGameModeServer(Gamestate Cur_State, GamescreenGameMode Cur_Screen)
 	{
@@ -42,7 +47,13 @@ public class StateGameModeServer implements InterfaceState
 		// TODO
 		this.Server = new BombermanServer(Bomberman.port);
 		
-		this.Server.start();
+		try {
+			this.Server.init();
+		} catch (IOException e) 
+		{
+			JOptionPane.showMessageDialog(Cur_Gamescreen.getRenderWindow().Frame, "Verbindung konnte nicht hergestellt werden.");
+			System.exit(1);
+		}
 	}
 
 	@Override
@@ -269,13 +280,48 @@ public class StateGameModeServer implements InterfaceState
 					synchronized (this.Cur_Gamescreen)
 					{
 						// TODO: check, ob bereits eine bombe auf aktuellem feld liegt. mehrfaches legen auf gleichem feld sollte nicht sein
-						this.Cur_Gamescreen.addBomb(Bomberman.getTileX(), Bomberman.getTileY(), 500, 0, 50, 5, 250, 50);
+						this.Cur_Gamescreen.addBomb(Bomberman.getTileX(), Bomberman.getTileY(), 500, 0, 50, 2, 250, 50);
 					}
 				}
 			}
 		}
 					
-		
+		// check on deaths
+		int death_count = 0;
+		for (int player = 0; player < this.Cur_Gamescreen.getNumberActivePlayers(); player++)
+		{
+			BombermanEntity Bomberman = this.Cur_Gamescreen.getBomberman(player);
+			
+			if (Bomberman.getState() == BombermanEntity.STATE.DEAD)
+			{
+				if (game_over == false)
+				{
+					game_over = true;
+					
+					death_count++;
+					if (player == 0)
+					{
+						new Thread(new Runnable() 
+						{
+							public void run() 
+							{
+								JOptionPane.showMessageDialog(Cur_Gamescreen.getRenderWindow().Frame, "Spieler 2 hat gewonnen!");
+							}
+					    }).start();
+					}
+					else
+					{
+						new Thread(new Runnable() 
+						{
+							public void run() 
+							{
+								JOptionPane.showMessageDialog(Cur_Gamescreen.getRenderWindow().Frame, "Spieler 1 hat gewonnen!");
+							}
+					    }).start();
+					}
+				}
+			}
+		}
 		
 		
 	}

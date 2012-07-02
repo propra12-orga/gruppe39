@@ -58,24 +58,13 @@ public class BombermanClient extends Thread
 	
 	
 	
-	public void start()
+	public void init() throws UnknownHostException, IOException
 	{
 		DebugConsole.Print("Connecting to server...");
 		
-		try 
-		{
-			this.Socket = new Socket(this.address, this.port);
-		} 
-		catch (UnknownHostException e) 
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} 
-		catch (IOException e) 
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
+		this.Socket = new Socket(this.address, this.port);
+
 		
 		this.connected.set(true);
 		

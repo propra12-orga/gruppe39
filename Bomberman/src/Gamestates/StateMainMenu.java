@@ -17,6 +17,7 @@ import javax.swing.border.EmptyBorder;
 import Engine.Bomberman;
 import Engine.Gamescreen;
 import Engine.Gamestate;
+import Engine.Generator;
 import Engine.InterfaceState;
 import Engine.RenderWindow;
 
@@ -37,6 +38,7 @@ public class StateMainMenu implements InterfaceState, ActionListener
 	private JTextField textField_1;
 	private JTextPane textPane;
 	
+	private JButton btnRandom = new JButton("Random");
 	private JButton btoenffnen = new JButton("Öffnen");
 	private JButton btnStart = new JButton("Start");
 	private JButton btnStartClient = new JButton("Starte Client");
@@ -66,8 +68,14 @@ public class StateMainMenu implements InterfaceState, ActionListener
 		
 
 		
-	
+		btnRandom.addActionListener(this);
 		
+		btnRandom.setBounds(30, 390, 107, 25);
+		contentPane.add(btnRandom);
+		
+		JLabel lblZuflligesLevel = new JLabel("Zufälliges Level");
+		lblZuflligesLevel.setBounds(30, 366, 107, 15);
+		contentPane.add(lblZuflligesLevel);
 		
 		
 		btoenffnen.addActionListener(this);
@@ -81,12 +89,13 @@ public class StateMainMenu implements InterfaceState, ActionListener
 		
 		
 		btnStartClient.addActionListener(this);
-		btnStartClient.setBounds(320, 306, 107, 25);
+		btnStartClient.setBounds(320, 306, 114, 25);
 		contentPane.add(btnStartClient);
 		
 		
 		btnStartServer.addActionListener(this);
-		btnStartServer.setBounds(320, 269, 107, 25);
+		btnStartServer.setBounds(320, 269, 114, 25);
+		
 		contentPane.add(btnStartServer);
 		
 		
@@ -173,7 +182,7 @@ public class StateMainMenu implements InterfaceState, ActionListener
 	}
 	
 	private void startGameLocal()
-	{
+	{		
 		this.Frame.removeAll();
 		this.Frame.dispose();
 		this.Cur_Gamescreen.getRenderWindow().initGameRenderWindow();
@@ -184,6 +193,12 @@ public class StateMainMenu implements InterfaceState, ActionListener
 	
 	private void startGameServer()
 	{
+		if (Bomberman.level == "map.ran")
+		{
+			JOptionPane.showMessageDialog(this.Frame, "Bitte ein Level laden, da Zufallslevel nicht unterstützt wird");
+			return;
+		}
+		
 		if (this.textField.getText().isEmpty())
 		{
 			JOptionPane.showMessageDialog(this.Frame, "Keine Portnummer angegeben");
@@ -201,6 +216,12 @@ public class StateMainMenu implements InterfaceState, ActionListener
 	
 	private void startGameClient()
 	{
+		if (Bomberman.level == "map.ran")
+		{
+			JOptionPane.showMessageDialog(this.Frame, "Bitte ein Level laden, da Zufallslevel nicht unterstützt wird");
+			return;
+		}
+		
 		if (this.textField.getText().isEmpty() || this.textField_1.getText().isEmpty())
 		{
 			JOptionPane.showMessageDialog(this.Frame, "Keine Portnummer oder Adresse angegeben");
@@ -214,6 +235,12 @@ public class StateMainMenu implements InterfaceState, ActionListener
 		Bomberman.port = (new Integer(this.textField.getText())).intValue();
 		Bomberman.address = this.textField_1.getText();
 		this.Cur_Gamestate.set(Gamestate.STATE.GAME_MODE_CLIENT);		
+	}
+	
+	private void randomMap()
+	{
+		Bomberman.level = "map.ran";
+		JOptionPane.showMessageDialog(this.Frame, "Zufälliges Level wird beim Spielstart erzeugt");
 	}
 
 	@Override
@@ -229,6 +256,8 @@ public class StateMainMenu implements InterfaceState, ActionListener
 			this.startGameClient();
 		else if (src == this.btnStartServer)
 			this.startGameServer();
+		else if (src == this.btnRandom)
+			this.randomMap();
 	
 	}
 }

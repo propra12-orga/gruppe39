@@ -3,6 +3,8 @@ package Gamestates;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 
+import javax.swing.JOptionPane;
+
 import Engine.Bomberman;
 import Engine.GamescreenGameMode;
 import Engine.Gamestate;
@@ -38,7 +40,7 @@ public class StateGameMode implements InterfaceState
 	
 	private Gamestate Cur_Gamestate;
 	private GamescreenGameMode Cur_Gamescreen;
-	
+	private boolean game_over = false;
 	
 	public StateGameMode(Gamestate Cur_State, GamescreenGameMode Cur_Screen)
 	{
@@ -295,11 +297,12 @@ public class StateGameMode implements InterfaceState
 					synchronized (this.Cur_Gamescreen)
 					{
 						// TODO: check, ob bereits eine bombe auf aktuellem feld liegt. mehrfaches legen auf gleichem feld sollte nicht sein
-						this.Cur_Gamescreen.addBomb(Bomberman.getTileX(), Bomberman.getTileY(), 500, 0, 50, 5, 250, 50);
+						this.Cur_Gamescreen.addBomb(Bomberman.getTileX(), Bomberman.getTileY(), 500, 0, 50, 2, 250, 50);
 					}
 				}
 			}
 		}
+		
 			
 		// check on deaths
 		int death_count = 0;
@@ -308,16 +311,36 @@ public class StateGameMode implements InterfaceState
 			BombermanEntity Bomberman = this.Cur_Gamescreen.getBomberman(player);
 			
 			if (Bomberman.getState() == BombermanEntity.STATE.DEAD)
-				death_count++;
-		}
-		
-		// game over?
-		if (death_count == this.Cur_Gamescreen.getNumberActivePlayers())
-		{
-			// TODO: result screen?
-			// just exit to no state for now
-			//this.Cur_Gamestate.set(Gamestate.STATE.NO_STATE);
-		}		
+			{
+				if (game_over == false)
+				{
+					game_over = true;
+					
+					death_count++;
+					if (player == 0)
+					{
+						new Thread(new Runnable() 
+						{
+							public void run() 
+							{
+								JOptionPane.showMessageDialog(Cur_Gamescreen.getRenderWindow().Frame, "Spieler 2 hat gewonnen!");
+							}
+					    }).start();
+					}
+					else
+					{
+						new Thread(new Runnable() 
+						{
+							public void run() 
+							{
+								JOptionPane.showMessageDialog(Cur_Gamescreen.getRenderWindow().Frame, "Spieler 1 hat gewonnen!");
+							}
+					    }).start();
+					}
+				}
+			}
+				
+		}	
 	}
 	
 

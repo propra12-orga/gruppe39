@@ -68,7 +68,7 @@ public class FrameMainMenu extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnStartClient.setBounds(320, 306, 107, 25);
+		btnStartClient.setBounds(320, 306, 114, 25);
 		contentPane.add(btnStartClient);
 		
 		JButton btnStartServer = new JButton("Start Server");
@@ -76,7 +76,7 @@ public class FrameMainMenu extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnStartServer.setBounds(320, 269, 107, 25);
+		btnStartServer.setBounds(320, 269, 114, 25);
 		contentPane.add(btnStartServer);
 		
 		JLabel lblLevelLaden = new JLabel("Level Laden");
@@ -127,5 +127,17 @@ public class FrameMainMenu extends JFrame {
 		JLabel lblAdresse = new JLabel("Adresse");
 		lblAdresse.setBounds(320, 387, 75, 15);
 		contentPane.add(lblAdresse);
+		
+		JButton btnRandom = new JButton("Random");
+		btnRandom.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
+		btnRandom.setBounds(30, 390, 107, 25);
+		contentPane.add(btnRandom);
+		
+		JLabel lblZuflligesLevel = new JLabel("Zufälliges Level");
+		lblZuflligesLevel.setBounds(30, 366, 107, 15);
+		contentPane.add(lblZuflligesLevel);
 	}
 }

@@ -59,19 +59,11 @@ public class BombermanServer extends Thread
 	
 	
 	
-	public void start()
+	public void init() throws IOException
 	{
 		DebugConsole.Print("Starting server");
 		
-		try 
-		{
-			this.Server = new ServerSocket(this.port);
-		} 
-		catch (IOException e1) 
-		{
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+		this.Server = new ServerSocket(this.port);
 			
 		this.Server_Thread = new Thread(this);
 		this.Server_Thread.start();

@@ -25,7 +25,7 @@ public class Generator
 
 			fillVectors();
 	}
-	/**  funktion für zufällige Zahlen */
+	/**  funktion fuer zufaellige Zahlen */
 	
 	private int randomNumber(int ceil)
 	{
@@ -47,7 +47,7 @@ public class Generator
 			for (j=0; j<13; j+=2)
 			{   
 				
-				// probabilität ca 66 dass es einen breakable gibt
+				// probabilitÔøΩt ca 66 dass es einen breakable gibt
 				random = randomNumber(3);
 				if (random != 0)
 				{
@@ -63,7 +63,7 @@ public class Generator
 		if (bomberman == 0)
 		{   
 			
-			// Bomberman muss sich frei bomben können
+			// Bomberman muss sich frei bomben kÔøΩnnen
 			Breakables.remove(new Point(0,0));
 			Breakables.remove(new Point(0,1));
 			Breakables.remove(new Point(1,0));
@@ -85,7 +85,7 @@ public class Generator
 		}
 		else
 		{   
-			// Bomberman muss sich frei bomben können
+			// Bomberman muss sich frei bomben kÔøΩnnen
 			Breakables.remove(new Point(14,0));
 			Breakables.remove(new Point(13,0));
 			Breakables.remove(new Point(14,1));
