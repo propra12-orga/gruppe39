@@ -55,7 +55,7 @@ public class StateMainMenu implements InterfaceState, ActionListener
 	@Override
 	public void init() 
 	{		
-
+		RenderWindow.Frame = new JFrame("Bomberman");
 		this.Frame = RenderWindow.Frame;
 		this.Frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.Frame.setBounds(100, 100, 480, 480);

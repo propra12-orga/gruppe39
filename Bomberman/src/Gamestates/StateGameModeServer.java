@@ -11,6 +11,7 @@ import Engine.GamescreenGameMode;
 import Engine.Gamestate;
 import Engine.InterfaceState;
 import Engine.KeyboardInput;
+import Engine.RenderWindow;
 import Entities.BombermanEntity;
 import Entities.Entity;
 import Entities.ExplosionEntity;
@@ -24,6 +25,8 @@ public class StateGameModeServer implements InterfaceState
 	private BombermanServer Server;
 	
 	private boolean game_over = false;
+	
+	private static volatile boolean exit = false;
 	
 	public StateGameModeServer(Gamestate Cur_State, GamescreenGameMode Cur_Screen)
 	{
@@ -301,34 +304,50 @@ public class StateGameModeServer implements InterfaceState
 					death_count++;
 					if (player == 0)
 					{
-						new Thread(new Runnable() 
-						{
-							public void run() 
-							{
-								JOptionPane.showMessageDialog(Cur_Gamescreen.getRenderWindow().Frame, "Spieler 2 hat gewonnen!");
-							}
-					    }).start();
+						MsgBox1 box = new MsgBox1();
+						box.start();						
 					}
 					else
 					{
-						new Thread(new Runnable() 
-						{
-							public void run() 
-							{
-								JOptionPane.showMessageDialog(Cur_Gamescreen.getRenderWindow().Frame, "Spieler 1 hat gewonnen!");
-							}
-					    }).start();
+						MsgBox2 box = new MsgBox2();
+						box.start();
+
 					}
 				}
 			}
 		}
 		
+		if (StateGameModeServer.exit == true)
+			this.Cur_Gamestate.set(Gamestate.STATE.MAIN_MENU);
 		
+	}
+	
+	
+	private class MsgBox1 extends Thread
+	{
+		public void run() 
+		{
+			JOptionPane.showMessageDialog(Cur_Gamescreen.getRenderWindow().Frame, "Spieler 2 hat gewonnen!");
+			exit = true;
+		}
+	}
+
+	private class MsgBox2 extends Thread
+	{
+		public void run() 
+		{
+			JOptionPane.showMessageDialog(Cur_Gamescreen.getRenderWindow().Frame, "Spieler 1 hat gewonnen!");
+			exit = true;
+		}
 	}
 
 	@Override
-	public void shutdown() {
+	public void shutdown() 
+	{
+		this.Server.shutdown();
+		exit = false;
 		// TODO Auto-generated method stub
+		RenderWindow.Frame.dispose();
 		
 	}
 }

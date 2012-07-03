@@ -28,6 +28,8 @@ public class StateGameModeClient implements InterfaceState
 	
 	private boolean game_over = false;
 	
+	private static volatile boolean exit = false;
+	
 	public StateGameModeClient(Gamestate Cur_State, GamescreenGameMode Cur_Screen)
 	{
 		// important: these are references
@@ -304,35 +306,51 @@ public class StateGameModeClient implements InterfaceState
 					death_count++;
 					if (player == 0)
 					{
-						new Thread(new Runnable() 
-						{
-							public void run() 
-							{
-								JOptionPane.showMessageDialog(Cur_Gamescreen.getRenderWindow().Frame, "Spieler 2 hat gewonnen!");
-							}
-					    }).start();
+						MsgBox1 box = new MsgBox1();
+						box.start();						
 					}
 					else
 					{
-						new Thread(new Runnable() 
-						{
-							public void run() 
-							{
-								JOptionPane.showMessageDialog(Cur_Gamescreen.getRenderWindow().Frame, "Spieler 1 hat gewonnen!");
-							}
-					    }).start();
+						MsgBox2 box = new MsgBox2();
+						box.start();
+
 					}
 				}
 			}		
 		}			
 		
-		
+		if (StateGameModeClient.exit == true)
+			this.Cur_Gamestate.set(Gamestate.STATE.MAIN_MENU);
 		
 	}
+	
+	
+	private class MsgBox1 extends Thread
+	{
+		public void run() 
+		{
+			JOptionPane.showMessageDialog(Cur_Gamescreen.getRenderWindow().Frame, "Spieler 2 hat gewonnen!");
+			StateGameModeClient.exit = true;
+		}
+	}
+
+	private class MsgBox2 extends Thread
+	{
+		public void run() 
+		{
+			JOptionPane.showMessageDialog(Cur_Gamescreen.getRenderWindow().Frame, "Spieler 1 hat gewonnen!");
+			StateGameModeClient.exit = true;
+		}
+	}
+	
 
 	@Override
-	public void shutdown() {
+	public void shutdown() 
+	{
+		this.Client.shutdown();
+		StateGameModeClient.exit = false;
 		// TODO Auto-generated method stub
+		RenderWindow.Frame.dispose();
 		
 	}
 }

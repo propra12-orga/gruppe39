@@ -10,6 +10,7 @@ import Engine.GamescreenGameMode;
 import Engine.Gamestate;
 import Engine.InterfaceState;
 import Engine.KeyboardInput;
+import Engine.RenderWindow;
 import Engine.Gamestate.STATE;
 import Engine.KeyboardInput.ACTION;
 import Entities.BombermanEntity;
@@ -40,16 +41,16 @@ public class StateGameMode implements InterfaceState
 	
 	private Gamestate Cur_Gamestate;
 	private GamescreenGameMode Cur_Gamescreen;
-	private boolean game_over = false;
+	private volatile boolean game_over = false;
 	
 	public StateGameMode(Gamestate Cur_State, GamescreenGameMode Cur_Screen)
 	{
 		// important: these are references
-		this.Cur_Gamestate = Cur_State;
+		this.Cur_Gamestate =  Cur_State;
 		this.Cur_Gamescreen = Cur_Screen;
 	}
 	
-
+	private static boolean exit = false;
 
 	@Override
 	public void init() 
@@ -319,37 +320,47 @@ public class StateGameMode implements InterfaceState
 					death_count++;
 					if (player == 0)
 					{
-						new Thread(new Runnable() 
-						{
-							public void run() 
-							{
-								JOptionPane.showMessageDialog(Cur_Gamescreen.getRenderWindow().Frame, "Spieler 2 hat gewonnen!");
-							}
-					    }).start();
+						MsgBox1 box = new MsgBox1();
+						box.start();						
 					}
 					else
 					{
-						new Thread(new Runnable() 
-						{
-							public void run() 
-							{
-								JOptionPane.showMessageDialog(Cur_Gamescreen.getRenderWindow().Frame, "Spieler 1 hat gewonnen!");
-							}
-					    }).start();
+						MsgBox2 box = new MsgBox2();
+						box.start();
+
 					}
 				}
-			}
-				
+			}	
 		}	
+		
+		if (exit == true)
+			this.Cur_Gamestate.set(Gamestate.STATE.MAIN_MENU);
 	}
 	
+	private class MsgBox1 extends Thread
+	{
+		public void run() 
+		{
+			JOptionPane.showMessageDialog(Cur_Gamescreen.getRenderWindow().Frame, "Spieler 2 hat gewonnen!");
+			StateGameMode.exit = true;
+		}
+	}
 
+	private class MsgBox2 extends Thread
+	{
+		public void run() 
+		{
+			JOptionPane.showMessageDialog(Cur_Gamescreen.getRenderWindow().Frame, "Spieler 1 hat gewonnen!");
+			StateGameMode.exit = true;
+		}
+	}
 	
 
 	@Override
 	public void shutdown() 
 	{
+		exit = false;
 		// TODO Auto-generated method stub
-		
+		RenderWindow.Frame.dispose();
 	}
 }
